@@ -1,0 +1,544 @@
+---
+import '../../styles/global.css';
+import languagesIcon from 'lucide-static/icons/languages.svg?url';
+
+const { lang } = Astro.params;
+const alt = lang === 'zh' ? 'en' : 'zh';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh' } },
+    { params: { lang: 'en' } },
+  ];
+}
+
+const L = (zh: string, en: string) => (lang === 'zh' ? zh : en);
+
+const T = {
+  hero: {
+    title: L('55AA 安全实验室 · LLM 网关', '55AA Security Lab · LLM Gateway'),
+  },
+  steps: [
+    {
+      title: L('注册', 'Register'),
+      p1: L(
+        '打开 <a href="https://llm.55aaseclab.com/register" target="_blank">llm.55aaseclab.com/register</a>，按顺序填写：用户名 → 密码 → 教育邮箱 → 邮箱验证码（10 分钟内有效）。',
+        'Open <a href="https://llm.55aaseclab.com/register" target="_blank">llm.55aaseclab.com/register</a> and fill in, in order: username → password → education email → email verification code (valid for 10 minutes).'
+      ),
+      img: 'register',
+      faq: [
+        { q: L('注册提示「邮箱不允许」？', 'Registration email not allowed?'), a: L('注册邮箱必须是教育机构邮箱，如仍不被允许，请联系管理员。', 'The registration email must be an education email. If it is still not allowed, contact the admin.') },
+        { q: L('验证码收不到？', 'Verification code not received?'), a: L('① 检查垃圾邮件；② 验证码 10 分钟有效，过期重取；③ 仍收不到联系管理员。', '① Check spam; ② code valid 10 min, re-request if expired; ③ contact admin.') },
+        { q: L('提示「邮箱已被占用」？', 'Email already in use?'), a: L('该邮箱注册过且账号仍存在。换邮箱或联系管理员。', 'That email was registered before. Use a different email or contact the admin.') },
+      ],
+    },
+    {
+      title: L('登录', 'Log in'),
+      p1: L(
+        '打开 <a href="https://llm.55aaseclab.com/login" target="_blank">llm.55aaseclab.com/login</a>，输入用户名或邮箱 + 密码登录。忘记密码走「忘记密码」重置。',
+        'Registration does not log you in automatically. Go to <a href="https://llm.55aaseclab.com/login" target="_blank">llm.55aaseclab.com/login</a>, enter your username or email + password. Forgot your password? Use "Forgot password" to reset.'
+      ),
+      img: 'login',
+      faq: [
+        { q: L('忘记密码？', 'Forgot password?'), a: L('登录页点击「忘记密码」→ 注册邮箱接收重置验证码（10 分钟有效）→ 设置新密码。', 'Click "Forgot password" on the login page → receive a reset code via email (valid 10 min) → set a new password.') },
+      ],
+    },
+    {
+      title: L('充值', 'Top up'),
+      p1: L(
+        '联系管理员充值。充值到账前可先完成下方第 4、5 步（生成令牌、接入工具），兑换成功后即可直接使用。',
+        'Contact the admin to top up. While waiting, you can complete steps 4 and 5 below (create your API key and connect your tools) — once redeemed, everything is ready to use.'
+      ),
+    },
+    {
+      title: L('兑换', 'Redeem'),
+      p1: L('控制台 → 钱包 → 输入您的兑换码 → 点击兑换额度。', 'Console → Wallet, enter your redemption code → credit applied.'),
+      img: 'redeem',
+      faq: [
+        { q: L('兑换码有什么限制？', 'Any restrictions on redemption codes?'), a: L('每个兑换码只能使用一次，不记名，请妥善保管。兑换码可能设置有效期，过期作废。', 'Each code can only be used once. Codes are not tied to a user — keep them safe. Codes may have an expiry date.') },
+      ],
+    },
+    {
+      title: L('获取 API 密钥', 'Get API Keys'),
+      p1: L(
+        '控制台 → API 密钥 → 创建 API 密钥 → 输入名称，直接点击保存更改 → 提交后点击复制获取完整令牌（sk-你的API令牌）。',
+        'Console → API Keys → Create API Key → enter a name, click Save Changes, then click Copy to get your token (sk-你的API令牌).'
+      ),
+      img: 'token-create',
+      faq: [
+        { q: L('令牌使用有什么建议？', 'Any tips for token management?'), a: L('一个用途一个令牌；泄露立即在令牌页停用并重新生成。', 'One token per purpose; if leaked, disable it on the token page and create a new one.') },
+      ],
+    },
+    {
+      title: L('接入你的工具', 'Connect your tools'),
+      p1: L(
+        '三样东西通用：https://llm.55aaseclab.com/v1 + 你的令牌 + 模型名。选择工具和操作系统，查看对应配置：',
+        'Everything needs the same three things: https://llm.55aaseclab.com/v1 + your token + a model name. Select your tool and OS to see the setup:'
+      ),
+      harness: ['codex', 'opencode', 'workbuddy'],
+      os: ['windows', 'macos', 'linux'],
+    },
+    {
+      title: L('监控', 'Monitor'),
+      p1: L(
+        '控制台 → 使用日志：每一次请求的模型、tokens、费用、耗时。',
+        'Console → Usage Logs: every request with model, tokens, cost and latency.'
+      ),
+      img: 'logs',
+    },
+  ],
+};
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>55AA Security Lab · LLM Gateway</title>
+    <meta name="description" content={L('55AA Security Lab 面向教育用户的 AI 模型统一网关', '55AA Security Lab AI model gateway for education')} />
+    <link rel="icon" href="/logo.png" />
+  </head>
+  <body>
+
+    <header class="site-header">
+      <div class="brand-lockup">
+        <a class="site-name" href="https://www.55aaseclab.com"><img src="/logo-lockup.svg" width="125" height="40" alt="55AA Security Lab" /></a>
+      </div>
+      <div class="header-actions">
+        <a class="header-action" href={`/${alt}/`}>
+          <img src={languagesIcon} width="22" height="22" alt="" loading="eager" decoding="sync" aria-hidden="true" />
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-left">
+          <h1>{T.hero.title}</h1>
+          <p class="hero-intro" set:html={lang === 'zh'
+            ? '55AA Security Lab 自建的 AI 模型统一网关，面向教育用户。通过统一的接口协议接入 GPT、图像生成等多个模型，按量计费，用量透明。查看下方文档开始使用。联系管理员请扫码进交流群。返回<a href="https://llm.55aaseclab.com/dashboard/overview">控制台</a>。'
+            : 'A unified AI model gateway built by 55AA Security Lab for education. Access GPT, image generation and more through one standard API. Pay per use, fully transparent. See the steps below to get started. Scan the QR code to join our community group and contact the admin. Go back to the <a href="https://llm.55aaseclab.com/dashboard/overview">Console</a>.'} />
+          <p class="hero-pricing" set:html={lang === 'zh'
+            ? '当前价格：OpenAI 官方价四折，充值 ¥1 = $1 额度，图片 ¥0.25 / 张。查看<a href="https://llm.55aaseclab.com/pricing" target="_blank">模型广场</a>获取最新价格。'
+            : 'Pricing: 40% of OpenAI list price, ¥1 = $1 credit, images ¥0.25 each. See <a href="https://llm.55aaseclab.com/pricing">Model Gallery</a> for latest prices.'} />
+        </div>
+        <div class="hero-right">
+          <div class="hero-contact">
+            <img class="qrcode" src="/qrcode.jpg" width="120" height="120" alt="QR Code" />
+            <p class="contact-line" set:html={L('联系管理员<br/>扫码进交流群', 'Contact admin<br/>Scan to join our community')} />
+          </div>
+        </div>
+      </section>
+
+      <ol class="timeline">
+        {T.steps.map((st, i) => (
+          <li class="step">
+            <div class="num">{i + 1}</div>
+            <div class="body">
+              <h2>{st.title}</h2>
+              {st.p1 && <p set:html={st.p1} />}
+              {st.img && <img src={`/images/${st.img}.png`} alt={st.title} />}
+              {st.note && <p class="note" set:html={st.note} />}
+              {st.harness && (
+                <Fragment>
+                  <div class="harness-tabs">
+                    <button class="harness-tab active" data-harness="codex">
+                      <img src="/icon-codex.png" width="18" height="18" alt="Codex" class="harness-icon-img" />
+                      <span>Codex</span>
+                    </button>
+                    <button class="harness-tab" data-harness="opencode">
+                      <img src="/icon-opencode.png" width="18" height="18" alt="OpenCode" class="harness-icon-img" />
+                      <span>OpenCode</span>
+                    </button>
+                    <button class="harness-tab" data-harness="workbuddy">
+                      <img src="/icon-workbuddy.svg" width="18" height="18" alt="WorkBuddy" class="harness-icon-img" />
+                      <span>WorkBuddy</span>
+                    </button>
+                  </div>
+                  <div class="harness-panel active" id="harness-codex">
+                    <div class="os-tabs">
+                      <button class="os-tab active" data-os="win">{L('Windows', 'Windows')}</button>
+                      <button class="os-tab" data-os="unix">{L('Linux / macOS', 'Linux / macOS')}</button>
+                    </div>
+                    <div class="os-panel active" id="os-win">
+                      <p><b>{L('1. 安装 Codex', '1. Install Codex')}</b></p>
+                      <p set:html={L('按 <code>Win + R</code>，输入 <code>cmd</code> 回车打开命令行，运行：', 'Press <code>Win + R</code>, type <code>cmd</code> and hit Enter, then run:')} />
+                      <pre><code>npm i -g @openai/codex@latest</code></pre>
+                      <p set:html={L('安装完成后<b>关闭命令行窗口重新打开</b>，验证：', 'After install, <b>close and reopen the terminal</b>, then verify:')} />
+                      <pre><code>codex --version</code></pre>
+                      <p><b>{L('2. 写入配置', '2. Configure')}</b></p>
+                      <p set:html={L('打开配置目录（提示找不到文件夹时，先运行 <code>mkdir "%USERPROFILE%\\.codex"</code>）：', 'Open the config folder (run <code>mkdir "%USERPROFILE%\\.codex"</code> first if it does not exist):')} />
+                      <pre><code>start "" "%USERPROFILE%\.codex"</code></pre>
+                      <p set:html={L('在目录里新建或编辑 <code>config.toml</code>（注意别存成 <code>config.toml.txt</code>），写入：', 'Create or edit <code>config.toml</code> in that folder (avoid saving as <code>config.toml.txt</code>) with:')} />
+                      <pre><code>model_provider = "llm.55aaseclab"
+model = "gpt-6.2-sol"
+model_reasoning_effort = "high"
+disable_response_storage = true
+
+[model_providers."llm.55aaseclab"]
+name = "llm.55aaseclab"
+base_url = "https://llm.55aaseclab.com/v1"
+wire_api = "responses"
+requires_openai_auth = false
+experimental_bearer_token = "sk-你的API令牌"</code></pre>
+                      <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌。', 'Change <code>sk-你的API令牌</code> to the token you generated in "Get API Keys" above.')} />
+                      <p><b>{L('3. 验证', '3. Verify')}</b></p>
+                      <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
+                    </div>
+                    <div class="os-panel" id="os-unix">
+                      <p><b>{L('1. 安装 Codex', '1. Install Codex')}</b></p>
+                      <p>{L('打开终端，运行：', 'Open a terminal and run:')}</p>
+                      <pre><code>npm i -g @openai/codex@latest</code></pre>
+                      <p set:html={L('安装完成后<b>关闭终端重新打开</b>，验证：', 'After install, <b>close and reopen the terminal</b>, then verify:')} />
+                      <pre><code>codex --version</code></pre>
+                      <p set:html={L('提示 <code>EACCES: permission denied</code> 时，在命令前加 <code>sudo</code> 重试。', 'If you see <code>EACCES: permission denied</code>, retry with <code>sudo</code> in front.')} />
+                      <p><b>{L('2. 写入配置', '2. Configure')}</b></p>
+                      <pre><code>mkdir -p "$HOME/.codex" && open -e "$HOME/.codex/config.toml"   # macOS
+mkdir -p "$HOME/.codex" && xdg-open "$HOME/.codex/config.toml"  # Linux</code></pre>
+                      <p set:html={L('在打开的文本编辑器里粘贴以下内容，把 <code>sk-你的API令牌</code> 改成你自己的令牌，保存后关闭：', 'Paste the following in the editor that opens, change <code>sk-你的API令牌</code> to your own token, then save and close:')} />
+                      <pre><code>model_provider = "llm.55aaseclab"
+model = "gpt-6.2-sol"
+model_reasoning_effort = "high"
+disable_response_storage = true
+
+[model_providers."llm.55aaseclab"]
+name = "llm.55aaseclab"
+base_url = "https://llm.55aaseclab.com/v1"
+wire_api = "responses"
+requires_openai_auth = false
+experimental_bearer_token = "sk-你的API令牌"</code></pre>
+                      <p><b>{L('3. 验证', '3. Verify')}</b></p>
+                      <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
+                    </div>
+
+                    <div class="step-faq">
+                      <p><b>{L('修改配置后不生效？', 'Changes not taking effect?')}</b><br/>{L('每次修改 config.toml 后需重启 codex 才会生效。', 'Restart codex after every config.toml change for it to take effect.')}</p>
+                    </div>
+                  </div>
+                  <div class="harness-panel" id="harness-opencode">
+                    <div class="os-tabs">
+                      <button class="os-tab active" data-os="win">{L('Windows', 'Windows')}</button>
+                      <button class="os-tab" data-os="unix">{L('Linux / macOS', 'Linux / macOS')}</button>
+                    </div>
+                    <div class="os-panel active" id="os-win">
+                      <p><b>{L('1. 安装 OpenCode', '1. Install OpenCode')}</b></p>
+                      <p set:html={L('按 <code>Win + R</code>，输入 <code>cmd</code> 回车打开命令行，运行：', 'Press <code>Win + R</code>, type <code>cmd</code> and hit Enter, then run:')} />
+                      <pre><code>npm install -g opencode-ai</code></pre>
+                      <p>{L('安装结束后出现几行黄色 npm warn 提示不影响使用。首次运行一次以生成配置文件夹：', 'A few yellow npm warn lines after install are harmless. Run it once to generate the config folder:')}</p>
+                      <pre><code>opencode</code></pre>
+                      <p set:html={L('程序启动后按 <code>Ctrl + C</code> 退出，会自动生成 <code>%USERPROFILE%\\.config\\opencode</code> 配置文件夹。', 'Once it starts, press <code>Ctrl + C</code> to quit. The config folder <code>%USERPROFILE%\\.config\\opencode</code> is generated automatically.')} />
+                      <p><b>{L('2. 写入配置', '2. Configure')}</b></p>
+                      <p set:html={L('打开配置目录：', 'Open the config folder:')} />
+                      <pre><code>start "" "%USERPROFILE%\.config\opencode"</code></pre>
+                      <p set:html={L('在目录里新建或编辑 <code>opencode.json</code>，写入：', 'Create or edit <code>opencode.json</code> in that folder with:')} />
+                      <pre><code>{`{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "llm.55aaseclab": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "llm.55aaseclab",
+      "options": {
+        "baseURL": "https://llm.55aaseclab.com/v1",
+        "apiKey": "sk-你的API令牌"
+      },
+      "models": {
+        "gpt-6.2-sol": {},
+        "gpt-6.2-astra": {},
+        "gpt-6.1-sol": {},
+        "gpt-6.1-terra": {},
+        "gpt-6": {},
+        "gpt-6-sol": {},
+        "gpt-6-luna": {},
+        "gpt-6-astra": {},
+        "gpt-5.6": {},
+        "gpt-5.6-sol": {},
+        "gpt-5.6-terra": {},
+        "gpt-5.6-luna": {}
+      }
+    }
+  }
+}`}</code></pre>
+                      <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌。<code>models</code> 里可换成模型广场的其他文本模型。', 'Change <code>sk-你的API令牌</code> to the token you generated in "Get API Keys" above. Swap <code>models</code> entries for any text model listed in the Model Gallery.')} />
+                      <p><b>{L('3. 验证', '3. Verify')}</b></p>
+                      <p set:html={L('运行 <code>opencode</code>，输入 <code>/models</code> 确认列表里有上面配置的模型，选中后发一条消息，能正常回复即配置成功。', 'Run <code>opencode</code>, type <code>/models</code> to confirm the configured models are listed, pick one and send a message — a normal reply means it works.')} />
+                    </div>
+                    <div class="os-panel" id="os-unix">
+                      <p><b>{L('1. 安装 OpenCode', '1. Install OpenCode')}</b></p>
+                      <p>{L('打开终端，运行：', 'Open a terminal and run:')}</p>
+                      <pre><code>npm install -g opencode-ai</code></pre>
+                      <p>{L('首次运行一次以生成配置文件夹：', 'Run it once to generate the config folder:')}</p>
+                      <pre><code>opencode</code></pre>
+                      <p set:html={L('程序启动后按 <code>Control + C</code> 退出，会自动生成 <code>$HOME/.config/opencode</code> 配置文件夹。提示 <code>EACCES: permission denied</code> 时，在安装命令前加 <code>sudo</code> 重试。', 'Once it starts, press <code>Control + C</code> to quit. The config folder <code>$HOME/.config/opencode</code> is generated automatically. If you see <code>EACCES: permission denied</code>, retry the install with <code>sudo</code>.')} />
+                      <p><b>{L('2. 写入配置', '2. Configure')}</b></p>
+                      <pre><code>open -e "$HOME/.config/opencode/opencode.json"   # macOS
+xdg-open "$HOME/.config/opencode/opencode.json"  # Linux</code></pre>
+                      <p>{L('目录不存在时，先运行 <code>mkdir -p "$HOME/.config/opencode"</code>。粘贴以下内容：', 'If the folder does not exist, run <code>mkdir -p "$HOME/.config/opencode"</code> first. Paste:')}</p>
+                      <pre><code>{`{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "llm.55aaseclab": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "llm.55aaseclab",
+      "options": {
+        "baseURL": "https://llm.55aaseclab.com/v1",
+        "apiKey": "sk-你的API令牌"
+      },
+      "models": {
+        "gpt-6.2-sol": {},
+        "gpt-6.2-astra": {},
+        "gpt-6.1-sol": {},
+        "gpt-6.1-terra": {},
+        "gpt-6": {},
+        "gpt-6-sol": {},
+        "gpt-6-luna": {},
+        "gpt-6-astra": {},
+        "gpt-5.6": {},
+        "gpt-5.6-sol": {},
+        "gpt-5.6-terra": {},
+        "gpt-5.6-luna": {}
+      }
+    }
+  }
+}`}</code></pre>
+                      <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌，保存后关闭。', 'Change <code>sk-你的API令牌</code> to the token you generated in "Get API Keys" above, then save and close.')} />
+                      <p><b>{L('3. 验证', '3. Verify')}</b></p>
+                      <p set:html={L('运行 <code>opencode</code>，输入 <code>/models</code> 确认列表里有上面配置的模型，选中后发一条消息，能正常回复即配置成功。', 'Run <code>opencode</code>, type <code>/models</code> to confirm the configured models are listed, pick one and send a message — a normal reply means it works.')} />
+                    </div>
+                  </div>
+                  <div class="harness-panel" id="harness-workbuddy">
+                    <p><b>{L('1. 配置自定义模型', '1. Configure a custom model')}</b></p>
+                    <p set:html={L('在对话页，点输入框右下角的模型选择器，选择 <code>配置自定义模型</code>：', 'In the chat, open the model picker at the bottom right of the input box and choose <code>Configure custom models</code>:')} />
+                    <img src="/images/workbuddy-configmodel.png" alt={L('WorkBuddy 配置自定义模型入口', 'Configure custom models entry in WorkBuddy')} />
+                    <p set:html={L('在添加模型对话框中的模型列表中选择 <code>自定义</code>：', 'In the add-model dialog, pick <code>Custom</code> from the model list:')} />
+                    <img src="/images/workbuddy-addmodel.png" alt={L('WorkBuddy 添加自定义模型', 'Add a custom model in WorkBuddy')} />
+                    <p set:html={L('填写供应商、接口地址、API Key、模型名称，高级配置勾选「工具调用」：', 'Fill in the vendor, base URL, API Key and model name, and check "Tool calls" under advanced options:')} />
+                    <pre><code>供应商：自定义
+接口地址：https://llm.55aaseclab.com/v1
+API Key：sk-你的API令牌
+模型名称：gpt-6.2-sol
+高级配置：勾选「工具调用」</code></pre>
+                    <img src="/images/workbuddy-fillin.png" alt={L('WorkBuddy 填写自定义模型', 'Fill in the custom model form in WorkBuddy')} />
+                    <p><b>{L('2. 选择模型', '2. Select the model')}</b></p>
+                    <p set:html={L('回到对话页，点输入框右下角的模型选择器，滚动到列表底部，在 <b>自定义模型</b> 分组下选择刚添加的模型。列表上方的自带模型不走网关，选了会调用失败。', 'Back in the chat, open the model picker at the bottom right of the input box, scroll to the bottom, and pick your model under the <b>Custom models</b> group. Built-in models above do not go through the gateway and will fail.')} />
+                    <p><b>{L('3. 验证', '3. Verify')}</b></p>
+                    <p>{L('发一句简单的消息（例如「你好」），能正常回复即配置成功，回复下方会显示当前使用的模型名。', 'Send a simple message like "hello" — a normal reply means it works. The model name used is shown below the reply.')}
+                    </p>
+                    <div class="step-faq">
+                      <p><b>{L('如何修改模型？', 'How to change the model?')}</b><br/>{L('再次打开模型选择器 → 配置自定义模型 → 选中已添加的模型修改「模型名称」后保存；或直接在模型选择器的「自定义模型」分组里切换到其他已添加的模型。可用模型：gpt-6.2-astra、gpt-6.1-sol、gpt-6.1-terra、gpt-6、gpt-6-sol、gpt-6-luna、gpt-6-astra、gpt-5.6、gpt-5.6-sol、gpt-5.6-terra、gpt-5.6-luna。', 'Open the model picker again → Configure custom models → select the model you added, change its model name and save; or simply switch to another added model under the "Custom models" group in the picker. Available models: gpt-6.2-astra, gpt-6.1-sol, gpt-6.1-terra, gpt-6, gpt-6-sol, gpt-6-luna, gpt-6-astra, gpt-5.6, gpt-5.6-sol, gpt-5.6-terra, gpt-5.6-luna.')}</p>
+                    </div>
+                  </div>
+                </Fragment>
+              )}
+              {st.faq && st.faq.length > 0 && (
+                <div class="step-faq">
+                  {st.faq.map((item) => (
+                    <p><b>{item.q}</b><br/>{item.a}</p>
+                  ))}
+                </div>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+
+    </main>
+
+    <footer class="site-footer-lower">
+      <span>© 2026 55AA Security Lab · {lang === 'zh' ? '保留所有权利' : 'All rights reserved'}</span>
+      <span>{lang === 'zh' ? `最后编辑：2026-11-22` : 'Last edited: 2026-11-22'}</span>
+    </footer>
+
+    <script>
+      document.querySelectorAll('.tool-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.tool-btn').forEach(function (b) { b.classList.remove('active'); });
+          document.querySelectorAll('.tool-panel').forEach(function (p) { p.classList.remove('active'); });
+          btn.classList.add('active');
+          var panel = document.getElementById('tool-' + btn.dataset.tool);
+          if (panel) panel.classList.add('active');
+        });
+      });
+
+      // 给每个 step 分配 id（对应 tabs 的锚点）
+      var stepIds = ['register', 'login', 'topup', 'redeem', 'token', 'connect', 'usage'];
+      var steps = document.querySelectorAll('.timeline > .step');
+      steps.forEach(function (step, i) {
+        if (stepIds[i]) step.id = stepIds[i];
+      });
+
+      // tabs 点击平滑滚动
+      document.querySelectorAll('.tabs a[href^="#"]').forEach(function (tab) {
+        tab.addEventListener('click', function (e) {
+          e.preventDefault();
+          var target = document.getElementById(tab.getAttribute('href').slice(1));
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+          document.querySelectorAll('.tabs a').forEach(function (t) { t.classList.remove('active'); });
+          tab.classList.add('active');
+        });
+      });
+
+      // harness tab 切换
+      document.querySelectorAll('.harness-tab').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.harness-tab').forEach(function (b) { b.classList.remove('active'); });
+          document.querySelectorAll('.harness-panel').forEach(function (p) { p.classList.remove('active'); });
+          btn.classList.add('active');
+          var panel = document.getElementById('harness-' + btn.dataset.harness);
+          if (panel) panel.classList.add('active');
+        });
+      });
+
+      // os 子 tab 切换
+      document.querySelectorAll('.os-tab').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var wrap = btn.closest('.harness-panel');
+          wrap.querySelectorAll('.os-tab').forEach(function (b) { b.classList.remove('active'); });
+          wrap.querySelectorAll('.os-panel').forEach(function (p) { p.classList.remove('active'); });
+          btn.classList.add('active');
+          var panel = wrap.querySelector('#os-' + btn.dataset.os);
+          if (panel) panel.classList.add('active');
+        });
+      });
+    </script>
+
+    <style>
+      :root {
+        --primary: #06c;
+        --text: #111;
+        --text2: #555;
+        --border: #e5e7eb;
+        --soft: #f6f8fa;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; color: var(--text);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        background: #fff; line-height: 1.7;
+      }
+      a { color: var(--primary); }
+
+      .site-header {
+        width: min(960px, calc(100% - 2rem)); margin-inline: auto;
+        display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 0;
+      }
+      .site-name img { display: block; width: 7.8125rem; height: 2.5rem; }
+      .header-actions { display: flex; align-items: center; gap: 0.35rem; }
+      .header-action { display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; color: var(--text2); text-decoration: none; font-size: 0.92rem; }
+      .header-action:hover { color: var(--primary); }
+      .header-action img { width: 1.375rem; height: 1.375rem; display: block; }
+
+      main { width: min(960px, calc(100% - 2rem)); margin-inline: auto; }
+      .hero-contact { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+      .hero .contact-line {
+        color: var(--text2); font-size: 0.88rem; margin: 0;
+      }
+      .qrcode { border-radius: 8px; }
+      .hero .contact-line {
+        color: var(--text2); font-size: 0.95rem; margin: 0 0 0.5rem;
+      }
+      .hero-pricing {
+        font-size: 0.92rem; color: var(--text2, #555);
+        margin: 0 0 0.5rem;
+        padding: 8px 14px; border-radius: 0.5rem;
+        background: rgba(0, 102, 204, 0.06); display: inline-block; width: 100%;
+      }
+      .hero-pricing a { color: #2563eb; text-decoration: underline; }
+      .hero-intro {
+        color: #555; font-size: 1rem; line-height: 1.8; margin: 0 0 1rem;
+      }
+      .hero {
+        display: flex; margin-bottom: 2rem; justify-content: space-between; align-items: center; gap: 2rem;
+      }
+      .hero-left { flex: 1 1 0; min-width: 0; }
+      .hero-right { flex: none; display: flex; align-items: center; }
+      .hero h1 { font-size: 2rem; letter-spacing: -0.02em; margin: 1.5rem 0 0.75rem; line-height: 1.25; }
+      .hero .intro { font-size: 1.05rem; color: var(--text2); margin: 0 0 1rem; }
+      .hero-contact { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+      .qrcode { border-radius: 8px; }
+      .hero .contact-line { color: var(--text2); font-size: 0.85rem; margin: 0; text-align: center; }
+
+      .timeline {
+        list-style: none; margin: 0; padding: 0; position: relative;
+      }
+      .timeline::before {
+        content: ""; position: absolute; left: 19px; top: 12px; bottom: 12px;
+        width: 2px; background: var(--border);
+      }
+      .step {
+        display: flex; gap: 1.5rem; padding-bottom: 2.75rem; position: relative; align-items: flex-start;
+      }
+      .num {
+        flex: 0 0 40px; width: 40px; height: 40px; margin-top: 0.1rem; border-radius: 50%;
+        background: #fff; border: 2px solid var(--primary); color: var(--primary);
+        font-weight: 700; font-size: 1.05rem;
+        display: flex; align-items: center; justify-content: center;
+        position: relative; z-index: 1;
+      }
+      .body { flex: 1; min-width: 0; }
+      .body h2 { font-size: 1.2rem; margin: 0.2rem 0 0.6rem; }
+      .body p { margin: 0.45rem 0; }
+      .body img { border: 1px solid var(--border); border-radius: 0.5rem; margin: 0.65rem 0; display: block; max-width: 100%; }
+      .body code { background: var(--soft); border: 1px solid var(--border); border-radius: 4px; padding: 0.08rem 0.35rem; font-size: 0.86em; }
+      .body pre { background: var(--soft); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.85rem 1rem; overflow-x: auto; margin: 0.65rem 0; }
+      .body pre code { background: none; border: none; padding: 0; font-size: 0.84rem; line-height: 1.55; }
+      .body ul { padding-left: 1.3rem; margin: 0.45rem 0; }
+      .body li { margin: 0.2rem 0; }
+      .note { color: var(--text2); font-size: 0.9rem; }
+      .tool-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0.8rem 0; }
+      .tool-btn {
+        padding: 6px 14px; border-radius: 0.5rem; border: 1px solid var(--border);
+        background: #fff; color: var(--text2); font-size: 0.9rem; cursor: pointer;
+        transition: all 0.15s;
+      }
+      .tool-btn:hover { border-color: var(--primary); color: var(--primary); }
+      .tool-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+      .tool-panel { display: none; }
+      .tool-panel.active { display: block; }
+      .outro { border-top: 1px solid var(--border); padding: 1.5rem 0 3rem; }
+      .outro p { margin: 0.3rem 0; }
+      .copyright { color: #999; font-size: 0.85rem; }
+      .site-footer-lower {
+        width: min(960px, calc(100% - 2rem)); margin-inline: auto;
+        display: flex; justify-content: space-between; gap: 1rem;
+        padding: 1rem 0 2rem; color: #555; font-size: 0.9rem; border-top: 1px solid #eee;
+      }
+    </style>
+
+    <style is:global>
+  .harness-tabs { display: flex; gap: 0.4rem 1rem; margin: 0.8rem 0 0.4rem; flex-wrap: wrap; padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+  .harness-tab {
+    color: #777; cursor: pointer; font: inherit; background: none;
+    border: 0; border-bottom: 1px solid transparent; padding: 0.15rem 0 0.05rem;
+    display: flex; align-items: center; gap: 6px; font-weight: 400;
+  }
+  .harness-tab:hover { color: #333; }
+  .harness-tab.active { color: #000; border-bottom-color: #333; }
+  .harness-icon {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+  }
+  .harness-panel { display: none; }
+  .harness-panel.active { display: block; padding: 4px 2px 4px; margin-top: 0; background: transparent; border: none; }
+  .os-tabs { display: flex; gap: 0.4rem 1rem; flex-wrap: wrap; padding-bottom: 0.5rem; margin-bottom: 0.8rem; border-bottom: 1px solid #eee; }
+  .os-tab {
+    color: #777; cursor: pointer; font: inherit; background: none;
+    border: 0; border-bottom: 1px solid transparent; padding: 0.15rem 0 0.05rem;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .os-tab:hover { color: #333; }
+  .os-tab.active { color: #000; border-bottom-color: #333; }
+  .os-panel { display: none; }
+  .os-panel.active { display: block; }
+  pre {
+    background: var(--soft); border: 1px solid var(--border); border-radius: 0.5rem;
+    padding: 0.7rem 1rem; overflow-x: auto; margin: 0.5rem 0;
+  }
+  pre code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.85rem; }
+  p code, li code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.85em;
+    background: var(--soft); border: 1px solid var(--border); border-radius: 4px; padding: 0.1rem 0.35rem;
+  }
+    </style>
+  </body>
+</html>
