@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://llmdocs.55aaseclab.com',
+  site: 'https://docs.55aaseclab.com',
   trailingSlash: 'ignore',
   i18n: {
     defaultLocale: 'zh',

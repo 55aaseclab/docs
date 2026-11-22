@@ -62,7 +62,7 @@ const T = {
       title: L('获取 API 密钥', 'Get API Keys'),
       p1: L(
         '控制台 → API 密钥 → 创建 API 密钥 → 输入名称，直接点击保存更改 → 提交后点击复制获取完整令牌（sk-你的API令牌）。',
-        'Console → API Keys → Create API Key → enter a name, click Save Changes, then click Copy to get your token (sk-你的API令牌).'
+        'Console → API Keys → Create API Key → enter a name, click Save Changes, then click Copy to get your token (sk-your-key).'
       ),
       img: 'token-create',
       faq: [
@@ -71,10 +71,6 @@ const T = {
     },
     {
       title: L('接入你的工具', 'Connect your tools'),
-      p1: L(
-        '三样东西通用：https://llm.55aaseclab.com/v1 + 你的令牌 + 模型名。选择工具和操作系统，查看对应配置：',
-        'Everything needs the same three things: https://llm.55aaseclab.com/v1 + your token + a model name. Select your tool and OS to see the setup:'
-      ),
       harness: ['codex', 'opencode', 'workbuddy'],
       os: ['windows', 'macos', 'linux'],
     },
@@ -125,7 +121,7 @@ const T = {
         <div class="hero-right">
           <div class="hero-contact">
             <img class="qrcode" src="/qrcode.jpg" width="120" height="120" alt="QR Code" />
-            <p class="contact-line" set:html={L('联系管理员<br/>扫码进交流群', 'Contact admin<br/>Scan to join our community')} />
+            <p class="contact-line" set:html={L('联系管理员<br/>扫码进交流群', 'Contact admin<br/>Scan to join')} />
           </div>
         </div>
       </section>
@@ -180,8 +176,8 @@ name = "llm.55aaseclab"
 base_url = "https://llm.55aaseclab.com/v1"
 wire_api = "responses"
 requires_openai_auth = false
-experimental_bearer_token = "sk-你的API令牌"</code></pre>
-                      <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌。', 'Change <code>sk-你的API令牌</code> to the token you generated in "Get API Keys" above.')} />
+experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}"</code></pre>
+                      <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above.')} />
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
                     </div>
@@ -195,7 +191,7 @@ experimental_bearer_token = "sk-你的API令牌"</code></pre>
                       <p><b>{L('2. 写入配置', '2. Configure')}</b></p>
                       <pre><code>mkdir -p "$HOME/.codex" && open -e "$HOME/.codex/config.toml"   # macOS
 mkdir -p "$HOME/.codex" && xdg-open "$HOME/.codex/config.toml"  # Linux</code></pre>
-                      <p set:html={L('在打开的文本编辑器里粘贴以下内容，把 <code>sk-你的API令牌</code> 改成你自己的令牌，保存后关闭：', 'Paste the following in the editor that opens, change <code>sk-你的API令牌</code> to your own token, then save and close:')} />
+                      <p set:html={L('在打开的文本编辑器里粘贴以下内容，把 <code>sk-你的API令牌</code> 改成你自己的令牌，保存后关闭：', 'Paste the following in the editor that opens, change <code>sk-your-key</code> to your own token, then save and close:')} />
                       <pre><code>model_provider = "llm.55aaseclab"
 model = "gpt-6.2-sol"
 model_reasoning_effort = "high"
@@ -206,7 +202,7 @@ name = "llm.55aaseclab"
 base_url = "https://llm.55aaseclab.com/v1"
 wire_api = "responses"
 requires_openai_auth = false
-experimental_bearer_token = "sk-你的API令牌"</code></pre>
+experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}"</code></pre>
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
                     </div>
@@ -239,7 +235,7 @@ experimental_bearer_token = "sk-你的API令牌"</code></pre>
       "name": "llm.55aaseclab",
       "options": {
         "baseURL": "https://llm.55aaseclab.com/v1",
-        "apiKey": "sk-你的API令牌"
+        "apiKey": "${lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}"
       },
       "models": {
         "gpt-6.2-sol": {},
@@ -258,7 +254,7 @@ experimental_bearer_token = "sk-你的API令牌"</code></pre>
     }
   }
 }`}</code></pre>
-                      <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌。<code>models</code> 里可换成模型广场的其他文本模型。', 'Change <code>sk-你的API令牌</code> to the token you generated in "Get API Keys" above. Swap <code>models</code> entries for any text model listed in the Model Gallery.')} />
+                      <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌。<code>models</code> 里可换成模型广场的其他文本模型。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above. Swap <code>models</code> entries for any text model listed in the Model Gallery.')} />
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>opencode</code>，输入 <code>/models</code> 确认列表里有上面配置的模型，选中后发一条消息，能正常回复即配置成功。', 'Run <code>opencode</code>, type <code>/models</code> to confirm the configured models are listed, pick one and send a message — a normal reply means it works.')} />
                     </div>
@@ -281,7 +277,7 @@ xdg-open "$HOME/.config/opencode/opencode.json"  # Linux</code></pre>
       "name": "llm.55aaseclab",
       "options": {
         "baseURL": "https://llm.55aaseclab.com/v1",
-        "apiKey": "sk-你的API令牌"
+        "apiKey": "${lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}"
       },
       "models": {
         "gpt-6.2-sol": {},
@@ -300,7 +296,7 @@ xdg-open "$HOME/.config/opencode/opencode.json"  # Linux</code></pre>
     }
   }
 }`}</code></pre>
-                      <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌，保存后关闭。', 'Change <code>sk-你的API令牌</code> to the token you generated in "Get API Keys" above, then save and close.')} />
+                      <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌，保存后关闭。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above, then save and close.')} />
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>opencode</code>，输入 <code>/models</code> 确认列表里有上面配置的模型，选中后发一条消息，能正常回复即配置成功。', 'Run <code>opencode</code>, type <code>/models</code> to confirm the configured models are listed, pick one and send a message — a normal reply means it works.')} />
                     </div>
@@ -314,7 +310,7 @@ xdg-open "$HOME/.config/opencode/opencode.json"  # Linux</code></pre>
                     <p set:html={L('填写供应商、接口地址、API Key、模型名称，高级配置勾选「工具调用」：', 'Fill in the vendor, base URL, API Key and model name, and check "Tool calls" under advanced options:')} />
                     <pre><code>供应商：自定义
 接口地址：https://llm.55aaseclab.com/v1
-API Key：sk-你的API令牌
+API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
 模型名称：gpt-6.2-sol
 高级配置：勾选「工具调用」</code></pre>
                     <img src="/images/workbuddy-fillin.png" alt={L('WorkBuddy 填写自定义模型', 'Fill in the custom model form in WorkBuddy')} />
