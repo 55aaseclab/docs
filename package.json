@@ -9,6 +9,7 @@
     "preview": "astro preview --port 4173 --host 0.0.0.0"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.6",
     "astro": "^7.4.13",
     "lucide-static": "^1.77.0"
   }
