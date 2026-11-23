@@ -353,8 +353,8 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
                   <p><b>{L('可选：安装生图技能 55aaimagegen（$0.25/张）', 'Optional: install the image skill 55aaimagegen ($0.25/image)')}</b><br/>
                   {L('把下面的提示词原样发给你的 AI 工具（Codex / OpenCode / WorkBuddy 均可），它会自动下载并安装技能（工具请求写入技能目录时请批准）。安装后在对话里直接说「画一张……」即可生成图片，技能会自动从你当前工具的配置里找到 API 密钥。', 'Paste the prompt below verbatim into your AI tool (Codex / OpenCode / WorkBuddy all work) — it downloads and installs the skill automatically (approve the write when the tool asks to save into its skill directory). Afterwards just say "draw ..." in the chat; the skill finds your API key from the tool you are using.')}</p>
                   <pre><code>{L(
-                    '请安装 55AA 生图技能：访问 https://docs.55aaseclab.com/skills/55aaimagegen/SKILL.md 获取完整内容，将其安装为名为 55aaimagegen 的技能（保存到你所在 harness 的技能目录，如 ~/.codex/skills/55aaimagegen/SKILL.md；若没有技能机制则保存到 ~/.55aa/skills/55aaimagegen/SKILL.md，并记住以后图片请求都用它）。安装完成后告诉我如何触发它。',
-                    'Install the 55AA image-generation skill: fetch https://docs.55aaseclab.com/skills/55aaimagegen/SKILL.md and install its full content as a skill named 55aaimagegen (save it to your harness skill directory, e.g. ~/.codex/skills/55aaimagegen/SKILL.md; if your harness has no skill mechanism, save it to ~/.55aa/skills/55aaimagegen/SKILL.md and remember to use it for all image requests). When done, tell me how to trigger it.'
+                    '请安装 55AA 生图技能：\n访问 https://docs.55aaseclab.com/skills/55aaimagegen/SKILL.md 获取完整内容，\n将其安装为名为 55aaimagegen 的技能：\n保存到你所在 harness 的技能目录（如 ~/.codex/skills/55aaimagegen/SKILL.md）；\n若没有技能机制，保存到 ~/.55aa/skills/55aaimagegen/SKILL.md，并记住以后图片请求都用它。\n安装完成后告诉我如何触发它。',
+                    'Install the 55AA image-generation skill:\nFetch https://docs.55aaseclab.com/skills/55aaimagegen/SKILL.md and install its full content as a skill named 55aaimagegen.\nSave it to your harness skill directory (e.g. ~/.codex/skills/55aaimagegen/SKILL.md);\nif your harness has no skill mechanism, save it to ~/.55aa/skills/55aaimagegen/SKILL.md and remember to use it for all image requests.\nWhen done, tell me how to trigger it.'
                   )}</code></pre>
                 </div>
               )}
@@ -452,6 +452,26 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
       }
       window.addEventListener('hashchange', activateFromHash);
       if (location.hash) activateFromHash();
+
+      // 代码块复制按钮
+      var COPY = document.documentElement.lang === 'zh' ? '复制' : 'Copy';
+      var COPIED = document.documentElement.lang === 'zh' ? '已复制' : 'Copied';
+      document.querySelectorAll('main pre').forEach(function (pre) {
+        var code = pre.querySelector('code');
+        if (!code) return;
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.type = 'button';
+        btn.textContent = COPY;
+        btn.addEventListener('click', function () {
+          navigator.clipboard.writeText(code.innerText.trim()).then(function () {
+            btn.textContent = COPIED;
+            btn.classList.add('ok');
+            setTimeout(function () { btn.textContent = COPY; btn.classList.remove('ok'); }, 1500);
+          });
+        });
+        pre.appendChild(btn);
+      });
 
       // os 子 tab 切换
       document.querySelectorAll('.os-tab').forEach(function (btn) {
@@ -567,6 +587,15 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
       .body ul { padding-left: 1.3rem; margin: 0.45rem 0; }
       .body li { margin: 0.2rem 0; }
       .note { color: var(--text2); font-size: 0.9rem; }
+      main pre { position: relative; }
+      .copy-btn {
+        position: absolute; top: 8px; right: 8px;
+        font-size: 0.75rem; color: var(--text2);
+        background: #fff; border: 1px solid var(--border); border-radius: 6px;
+        padding: 2px 10px; cursor: pointer; opacity: 0.65; transition: all 0.15s;
+      }
+      .copy-btn:hover { color: var(--primary); border-color: var(--primary); opacity: 1; }
+      .copy-btn.ok { color: #0a8a3a; border-color: #0a8a3a; opacity: 1; }
       .tool-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0.8rem 0; }
       .tool-btn {
         padding: 6px 14px; border-radius: 0.5rem; border: 1px solid var(--border);
