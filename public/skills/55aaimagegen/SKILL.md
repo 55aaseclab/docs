@@ -1,6 +1,6 @@
 ---
 name: 55aaimagegen
-description: Generate or edit raster images through the 55AA gateway (gpt-image-* models, $0.25 per image). Use whenever the user asks to create, generate, or edit an image, photo, illustration, sprite, mockup, texture, or transparent-background cutout. Universal skill — works in any harness (Codex CLI, OpenCode, WorkBuddy, or any agent with shell access). It locates the 55AA API key automatically; never ask for OPENAI_API_KEY.
+description: Generate or edit raster images through the 55AA gateway (gpt-image-* models). Use whenever the user asks to create, generate, or edit an image, photo, illustration, sprite, mockup, texture, or transparent-background cutout. Universal skill — works in any harness (Codex CLI, OpenCode, WorkBuddy, or any agent with shell access). It locates the 55AA API key automatically; never ask for OPENAI_API_KEY.
 ---
 
 # 55AA Image Generation
@@ -10,7 +10,6 @@ synced from OpenAI's official `imagegen` skill; execution is dependency-free
 (curl + python3), so it works in any harness.
 
 - Base URL (fixed): `https://llm.55aaseclab.com/v1`
-- Billing: **$0.25 per image**, regardless of size or quality.
 - Models (7): `gpt-image-2` (default), `gpt-image-1`, `gpt-image-1.5`,
   `gpt-image-2.5-flare`, `gpt-image-2.5-sunburst`, `gpt-image-2.6-flare`,
   `gpt-image-2.6-sunburst`.

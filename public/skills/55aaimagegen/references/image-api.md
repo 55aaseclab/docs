@@ -72,7 +72,7 @@ Square images are typically fastest to generate.
 - `low`: fast drafts, thumbnails, quick iterations.
 - `medium` / `high`: final assets, dense text, diagrams, identity-sensitive
   edits, high-resolution outputs.
-- Large sizes and high quality increase latency (billing stays $0.25/image).
+- Large sizes and high quality increase latency.
 
 ## Error handling
 - If a request fails because a specific option is unsupported by the selected
