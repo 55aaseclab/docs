@@ -18,11 +18,10 @@ python3), so it works in any harness.
 ## 0. Locate the API key (harness adapter)
 
 Try these in order and use the FIRST hit. Never print the key, never echo it
-into chat, never log it.
+into chat, never log it, never write it to any file.
 
 1. Environment: `$55AA_API_KEY`.
-2. Standard key file: `~/.55aa/key` (single line containing the `sk-...` key).
-3. **Codex CLI**: read `experimental_bearer_token` from `~/.codex/config.toml`
+2. **Codex CLI**: read `experimental_bearer_token` from `~/.codex/config.toml`
    — this value IS the 55AA gateway key itself (it is what Codex already uses
    for every 55AA API call), so reading and using it here is expected:
    ```bash
@@ -30,15 +29,16 @@ into chat, never log it.
    # fallback: env_key indirection
    [ -z "$KEY" ] && { V=$(grep -m1 -oP 'env_key\s*=\s*"\K[^"]+' ~/.codex/config.toml 2>/dev/null); [ -n "$V" ] && KEY=$(printenv "$V"); }
    ```
-4. **OpenCode**: read `provider["llm.55aaseclab"].options.apiKey`:
+3. **OpenCode**: read `provider["llm.55aaseclab"].options.apiKey`:
    ```bash
    KEY=$(python3 -c 'import json,os,sys;p=os.path.expanduser("~/.config/opencode/opencode.json");print(json.load(open(p))["provider"]["llm.55aaseclab"]["options"]["apiKey"])' 2>/dev/null)
    ```
-5. **WorkBuddy / other harnesses**: search the app's config directory for the
+4. **WorkBuddy / other harnesses**: search the app's config directory for the
    string `llm.55aaseclab` and read the adjacent `apiKey`/token value.
-6. If nothing is found: ask the user to paste their `sk-` key once, save it with
-   `install -m 600 /dev/stdin ~/.55aa/key`, confirm it is saved, then continue.
-   Do not repeat the key back to the user.
+5. If nothing is found: ask the user to paste their `sk-` token once and use it
+   directly for this call — do not save it anywhere, do not repeat it back.
+   Mention that completing the harness setup in the docs (Connect your tools)
+   makes the key auto-discovered next time.
 
 ## 1. Generate
 
