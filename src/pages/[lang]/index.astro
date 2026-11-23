@@ -14,6 +14,9 @@ export function getStaticPaths() {
 
 const L = (zh: string, en: string) => (lang === 'zh' ? zh : en);
 
+const stepIds = ['register', 'login', 'topup', 'redeem', 'token', 'connect', 'usage'];
+const OPEN_STEP = 5; // 「接入你的工具」默认展开，其余折叠
+
 const T = {
   hero: {
     title: L('LLM 网关 · 55AA 安全实验室', 'LLM Gateway · 55AA Security Lab'),
@@ -134,10 +137,11 @@ const T = {
 
       <ol class="timeline">
         {T.steps.map((st, i) => (
-          <li class="step">
+          <li class:list={['step', { collapsed: i !== OPEN_STEP }]} id={stepIds[i]}>
             <div class="num">{i + 1}</div>
             <div class="body">
-              <h2>{st.title}</h2>
+              <h2 class="step-heading"><a class="step-toggle" href={`#${stepIds[i]}`} aria-expanded={i === OPEN_STEP ? 'true' : 'false'}>{st.title}</a></h2>
+              <div class="step-content">
               {st.p1 && <p set:html={st.p1} />}
               {st.img && <img src={`/images/${st.img}.png`} alt={st.title} />}
               {st.note && <p class="note" set:html={st.note} />}
@@ -338,6 +342,7 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
                   ))}
                 </div>
               )}
+              </div>
             </div>
           </li>
         ))}
@@ -347,7 +352,7 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
 
     <footer class="site-footer-lower">
       <span>© 2026 55AA Security Lab · {lang === 'zh' ? '保留所有权利' : 'All rights reserved'}</span>
-      <span>{lang === 'zh' ? `最后编辑：2026-11-22` : 'Last edited: 2026-11-22'}</span>
+      <span>{lang === 'zh' ? `最后编辑：2026-11-23` : 'Last edited: 2026-11-23'}</span>
     </footer>
 
     <script>
@@ -361,11 +366,26 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
         });
       });
 
-      // 给每个 step 分配 id（对应 tabs 的锚点）
-      var stepIds = ['register', 'login', 'topup', 'redeem', 'token', 'connect', 'usage'];
-      var steps = document.querySelectorAll('.timeline > .step');
-      steps.forEach(function (step, i) {
-        if (stepIds[i]) step.id = stepIds[i];
+      // 步骤折叠/展开 + URL 随动
+      function setStepOpen(step, open) {
+        step.classList.toggle('collapsed', !open);
+        var toggle = step.querySelector('.step-toggle');
+        if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+      document.querySelectorAll('.step-toggle').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          var step = link.closest('.step');
+          var isOpen = !step.classList.contains('collapsed');
+          if (isOpen) {
+            setStepOpen(step, false);
+            history.pushState(null, '', location.pathname + location.search);
+          } else {
+            setStepOpen(step, true);
+            history.pushState(null, '', '#' + step.id);
+            step.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
       });
 
       // tabs 点击平滑滚动
@@ -390,13 +410,22 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
         });
       });
 
-      // 锚点直达工具 tab：#codex / #opencode / #workbuddy
+      // 锚点直达：#codex/#opencode/#workbuddy 切工具 tab，#register 等 → 展开对应步骤
       function activateFromHash() {
         var h = (location.hash || '').replace('#', '');
-        var btn = document.querySelector('.harness-tab[data-harness="' + h + '"]');
-        if (btn) {
-          btn.click();
-          btn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (!h) return;
+        var tab = document.querySelector('.harness-tab[data-harness="' + h + '"]');
+        if (tab) {
+          var host = tab.closest('.step');
+          if (host) setStepOpen(host, true);
+          tab.click();
+          tab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+        var step = document.getElementById(h);
+        if (step && step.classList.contains('step')) {
+          setStepOpen(step, true);
+          step.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
       window.addEventListener('hashchange', activateFromHash);
@@ -489,6 +518,20 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
         position: relative; z-index: 1;
       }
       .body { flex: 1; min-width: 0; }
+      .body h2.step-heading { margin: 0.2rem 0 0.2rem; }
+      .step-toggle {
+        color: inherit; text-decoration: none; cursor: pointer;
+        display: inline-flex; align-items: center; gap: 0.35rem;
+      }
+      .step-toggle::after {
+        content: "▾"; font-size: 0.75em; color: var(--text2);
+        transition: transform 0.15s ease; transform-origin: center;
+      }
+      .step-toggle:hover { color: var(--primary); }
+      .step-toggle:hover::after { color: var(--primary); }
+      .step.collapsed .step-toggle::after { transform: rotate(-90deg); }
+      .step-content { margin-top: 0.4rem; }
+      .step.collapsed .step-content { display: none; }
       .body h2 { font-size: 1.2rem; margin: 0.2rem 0 0.6rem; }
       .body p { margin: 0.45rem 0; }
       .body img { border: 1px solid var(--border); border-radius: 0.5rem; margin: 0.65rem 0; display: block; max-width: 100%; }
