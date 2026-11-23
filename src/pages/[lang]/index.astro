@@ -350,7 +350,7 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
               )}
               {st.harness && (
                 <div class="step-faq skill-install">
-                  <p><b>{L('可选：安装生图技能 55aaimagegen（$0.25/张）', 'Optional: install the image skill 55aaimagegen ($0.25/image)')}</b><br/>
+                  <p><b>{L('可选：安装生图技能 55aaimagegen', 'Optional: install the image skill 55aaimagegen')}</b><br/>
                   {L('把下面的提示词原样发给你的 AI 工具（Codex / OpenCode / WorkBuddy 均可），它会自动下载并安装技能（工具请求写入技能目录时请批准）。安装后在对话里直接说「画一张……」即可生成图片，技能会自动从你当前工具的配置里找到 API 密钥。', 'Paste the prompt below verbatim into your AI tool (Codex / OpenCode / WorkBuddy all work) — it downloads and installs the skill automatically (approve the write when the tool asks to save into its skill directory). Afterwards just say "draw ..." in the chat; the skill finds your API key from the tool you are using.')}</p>
                   <pre><code>{L(
                     '请安装 55AA 生图技能：\n访问 https://docs.55aaseclab.com/skills/55aaimagegen/SKILL.md 获取主文件，\n并按其中 references 清单把 references/ 下的全部文件一并获取；\n按照你所在 harness 的技能安装规范，将以上文件以技能名 55aaimagegen 安装到你的技能目录，保持相对目录结构。\n安装完成后告诉我如何触发它。',
