@@ -383,7 +383,6 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
           } else {
             setStepOpen(step, true);
             history.pushState(null, '', '#' + step.id);
-            step.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         });
       });
