@@ -455,6 +455,20 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
 
       // 代码块复制按钮（右上角小方块图标）
       var COPY = document.documentElement.lang === 'zh' ? '复制代码' : 'Copy code';
+      function copyText(text, done) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text, done); });
+        } else { fallbackCopy(text, done); }
+      }
+      function fallbackCopy(text, done) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
       document.querySelectorAll('main pre').forEach(function (pre) {
         var code = pre.querySelector('code');
         if (!code) return;
@@ -464,7 +478,7 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
         btn.title = COPY;
         btn.setAttribute('aria-label', COPY);
         btn.addEventListener('click', function () {
-          navigator.clipboard.writeText(code.innerText.trim()).then(function () {
+          copyText(code.innerText.trim(), function () {
             btn.classList.add('ok');
             setTimeout(function () { btn.classList.remove('ok'); }, 1500);
           });
@@ -586,26 +600,6 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
       .body ul { padding-left: 1.3rem; margin: 0.45rem 0; }
       .body li { margin: 0.2rem 0; }
       .note { color: var(--text2); font-size: 0.9rem; }
-      main pre { position: relative; }
-      .copy-btn {
-        position: absolute; top: 6px; right: 6px;
-        width: 22px; height: 22px;
-        display: flex; align-items: center; justify-content: center;
-        background: #fff; border: 1px solid var(--border); border-radius: 4px;
-        color: var(--text2); cursor: pointer; opacity: 0; transition: opacity 0.15s;
-      }
-      pre:hover .copy-btn, .copy-btn.ok { opacity: 1; }
-      @media (hover: none) { .copy-btn { opacity: 0.5; } }
-      .copy-btn::before {
-        content: ""; width: 12px; height: 12px; background: currentColor;
-        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='5.5' y='5.5' width='8' height='8' rx='1' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3Cpath d='M10.5 3.5v-1h-8v8h1' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat center / contain;
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='5.5' y='5.5' width='8' height='8' rx='1' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3Cpath d='M10.5 3.5v-1h-8v8h1' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat center / contain;
-      }
-      .copy-btn.ok { color: #0a8a3a; border-color: #0a8a3a; }
-      .copy-btn.ok::before {
-        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.5 3.5L13 5' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.5 3.5L13 5' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
-      }
       .tool-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0.8rem 0; }
       .tool-btn {
         padding: 6px 14px; border-radius: 0.5rem; border: 1px solid var(--border);
@@ -627,6 +621,28 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
     </style>
 
     <style is:global>
+  /* 代码块复制按钮（JS 运行时创建，必须全局作用域） */
+  main pre { position: relative; }
+  .copy-btn {
+    position: absolute; top: 6px; right: 6px;
+    width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 4px;
+    color: #555; cursor: pointer; opacity: 0; transition: opacity 0.15s;
+  }
+  pre:hover .copy-btn, .copy-btn.ok { opacity: 1; }
+  @media (hover: none) { .copy-btn { opacity: 0.5; } }
+  .copy-btn::before {
+    content: ""; width: 12px; height: 12px; background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='5.5' y='5.5' width='8' height='8' rx='1' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3Cpath d='M10.5 3.5v-1h-8v8h1' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat center / contain;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='5.5' y='5.5' width='8' height='8' rx='1' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3Cpath d='M10.5 3.5v-1h-8v8h1' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+  .copy-btn.ok { color: #0a8a3a; border-color: #0a8a3a; }
+  .copy-btn.ok::before {
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.5 3.5L13 5' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.5 3.5L13 5' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+
   .harness-tabs { display: flex; gap: 0.4rem 1rem; margin: 0.8rem 0 0.4rem; flex-wrap: wrap; padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
   .harness-tab {
     color: #777; cursor: pointer; font: inherit; background: none;
