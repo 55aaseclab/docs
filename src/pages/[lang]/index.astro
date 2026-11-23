@@ -536,12 +536,14 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
         display: inline-flex; align-items: center; gap: 0.35rem;
       }
       .step-toggle::after {
-        content: "▾"; font-size: 0.75em; color: var(--text2);
+        content: ""; width: 0.7em; height: 0.7em; flex: none;
+        background: currentColor; opacity: 0.5;
         transition: transform 0.15s ease; transform-origin: center;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 6l4.5 4.5L12.5 6' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 6l4.5 4.5L12.5 6' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
       }
-      .step-toggle:hover { color: var(--primary); }
-      .step-toggle:hover::after { color: var(--primary); }
-      .step-summary { font-size: 0.88rem; color: var(--text2); font-weight: 400; margin-left: 0.3rem; }
+      .step-toggle:hover::after { color: var(--primary); opacity: 0.9; }
+      .step-summary { font-size: 0.88rem; color: var(--text2); font-weight: 400; margin-left: 0.55rem; }
       .step:not(.collapsed) .step-summary { display: none; }
       .step.collapsed .step-toggle::after { transform: rotate(-90deg); }
       .step-content { margin-top: 0.4rem; }
