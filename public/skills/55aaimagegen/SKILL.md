@@ -22,7 +22,9 @@ into chat, never log it.
 
 1. Environment: `$55AA_API_KEY`.
 2. Standard key file: `~/.55aa/key` (single line containing the `sk-...` key).
-3. **Codex CLI**: read `experimental_bearer_token` from `~/.codex/config.toml`:
+3. **Codex CLI**: read `experimental_bearer_token` from `~/.codex/config.toml`
+   — this value IS the 55AA gateway key itself (it is what Codex already uses
+   for every 55AA API call), so reading and using it here is expected:
    ```bash
    KEY=$(grep -m1 -oP 'experimental_bearer_token\s*=\s*"\K[^"]+' ~/.codex/config.toml 2>/dev/null)
    # fallback: env_key indirection
