@@ -14,8 +14,8 @@ export function getStaticPaths() {
 
 const L = (zh: string, en: string) => (lang === 'zh' ? zh : en);
 
-const stepIds = ['register', 'login', 'topup', 'redeem', 'token', 'connect', 'usage'];
-const OPEN_STEP = 5; // 「接入你的工具」默认展开，其余折叠
+const stepIds = ['register', 'login', 'topup', 'token', 'connect', 'usage'];
+const OPEN_STEP = 4; // 「接入你的工具」默认展开，其余折叠
 
 // 折叠态标题后的首句摘要（去 HTML 标签，按句号/问叹号截断，超长省略）
 const summaryOf = (html: string) => {
@@ -62,16 +62,13 @@ const T = {
     {
       title: L('充值', 'Top up'),
       p1: L(
-        '联系管理员充值。充值到账前可先完成下方第 4、5 步（生成令牌、接入工具），兑换成功后即可直接使用。',
-        'Contact the admin to top up. While waiting, you can complete steps 4 and 5 below (create your API key and connect your tools) — once redeemed, everything is ready to use.'
+        '登录控制台 → 钱包 → 选择充值金额 → 支付方式选「微信」→ 点击支付，微信扫码完成支付，额度实时到账（¥1 = $1 额度，官方价 4 折）。',
+        'Console → Wallet → pick an amount → choose WeChat → pay by scanning the QR code. Credits arrive instantly (¥1 = $1 credit, 40% of list price).'
       ),
-    },
-    {
-      title: L('兑换', 'Redeem'),
-      p1: L('控制台 → 钱包 → 输入您的兑换码 → 点击兑换额度。', 'Console → Wallet, enter your redemption code → credit applied.'),
-      img: 'redeem',
+      img: 'topup',
       faq: [
-        { q: L('兑换码有什么限制？', 'Any restrictions on redemption codes?'), a: L('每个兑换码只能使用一次，不记名，请妥善保管。兑换码可能设置有效期，过期作废。', 'Each code can only be used once. Codes are not tied to a user — keep them safe. Codes may have an expiry date.') },
+        { q: L('支付后额度没到账？', 'Paid but credits not showing?'), a: L('刷新钱包页或查看「订单历史」；通常秒级到账，超过 5 分钟未到账请联系管理员（附订单号）。', 'Refresh the wallet page or check Order History; credits usually arrive in seconds. If not within 5 minutes, contact the admin with your order number.') },
+        { q: L('兑换码还能用吗？', 'Do redemption codes still work?'), a: L('可以。钱包页点「兑换额度」输入兑换码即可（兑换码向管理员购买）。', 'Yes. Click "Redeem" on the wallet page and enter the code (purchase codes from the admin).') },
       ],
     },
     {
