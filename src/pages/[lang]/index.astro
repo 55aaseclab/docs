@@ -206,6 +206,14 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
 2. 打开工具 → Sync 页 → Sync now（当前 provider 保持 llm.55aaseclab）
 3. 继续旧对话先在旧会话里执行 /fork（加密块与新线路不兼容）；新对话直接开。</code></pre>
                       </div>
+                        <div class="step-faq">
+                          <p><b>{L('想切换回官方 Codex？', 'Want to switch back to official Codex?')}</b><br/>{L('方式一（临时）：删除/注释 config.toml 里 55AA 的配置段与 model_provider 行，即恢复官方默认（ChatGPT 登录态未动会自动生效）。方式二（推荐，双配置共存）：保留 55AA 配置，加一个 profile——', 'Option 1 (quick): delete/comment out the 55AA block and the model_provider line in config.toml — official defaults resume (your ChatGPT login remains intact). Option 2 (recommended, keep both): add a profile —')}</p>
+                          <pre><code>[profiles.55aa]
+model = "gpt-6.2-sol"
+model_provider = "llm.55aaseclab"
+model_reasoning_effort = "high"</code></pre>
+                          {L('之后 codex --profile 55aa 走 55AA，直接 codex 走官方，随时切换互不影响；历史会话跟随各自 provider 显示。', 'Then codex --profile 55aa uses 55AA; plain codex uses official. Switch anytime — history follows each provider.')}
+                        </div>
                       <div class="step-faq">
                         <p><b>{L('配置后需要重新登录 GPT 账号吗？', 'Do I need to re-login with my GPT account after configuring?')}</b><br/>{L('不需要。配置一次长期生效，且用 55AA 不需要 GPT 账号——鉴权走 55AA 令牌（已写在配置里）；之前的 ChatGPT 登录态留着不冲突。只有换电脑 / 重装系统 / 删除 ~/.codex 才需要重新配置。', 'No. Configure once and it persists — 55AA does not need a GPT account (auth uses your 55AA token already in the config). Your previous ChatGPT login can stay, no conflict. Re-configure only when changing machines, reinstalling, or deleting ~/.codex.')}</p>
                       </div>
@@ -240,6 +248,14 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
 2. 运行：codex-provider sync
 3. 继续旧对话先在旧会话里执行 /fork（加密块与新线路不兼容）；新对话直接开。</code></pre>
                       </div>
+                        <div class="step-faq">
+                          <p><b>{L('想切换回官方 Codex？', 'Want to switch back to official Codex?')}</b><br/>{L('方式一（临时）：删除/注释 config.toml 里 55AA 的配置段与 model_provider 行，即恢复官方默认（ChatGPT 登录态未动会自动生效）。方式二（推荐，双配置共存）：保留 55AA 配置，加一个 profile——', 'Option 1 (quick): delete/comment out the 55AA block and the model_provider line in config.toml — official defaults resume (your ChatGPT login remains intact). Option 2 (recommended, keep both): add a profile —')}</p>
+                          <pre><code>[profiles.55aa]
+model = "gpt-6.2-sol"
+model_provider = "llm.55aaseclab"
+model_reasoning_effort = "high"</code></pre>
+                          {L('之后 codex --profile 55aa 走 55AA，直接 codex 走官方，随时切换互不影响；历史会话跟随各自 provider 显示。', 'Then codex --profile 55aa uses 55AA; plain codex uses official. Switch anytime — history follows each provider.')}
+                        </div>
                       <div class="step-faq">
                         <p><b>{L('配置后需要重新登录 GPT 账号吗？', 'Do I need to re-login with my GPT account after configuring?')}</b><br/>{L('不需要。配置一次长期生效，且用 55AA 不需要 GPT 账号——鉴权走 55AA 令牌（已写在配置里）；之前的 ChatGPT 登录态留着不冲突。只有换电脑 / 重装系统 / 删除 ~/.codex 才需要重新配置。', 'No. Configure once and it persists — 55AA does not need a GPT account (auth uses your 55AA token already in the config). Your previous ChatGPT login can stay, no conflict. Re-configure only when changing machines, reinstalling, or deleting ~/.codex.')}</p>
                       </div>
