@@ -509,7 +509,7 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
                   <pre><code>{L('1. 安装：npm i -g git+https://github.com/Dailin521/codex-provider-sync.git\n2. 运行：codex-provider sync（当前 provider 保持 llm.55aaseclab）\n3. 继续旧对话先在旧会话里执行 /fork（加密块与新线路不兼容）；新对话直接开。', '1. Install: npm i -g git+https://github.com/Dailin521/codex-provider-sync.git\n2. Run: codex-provider sync (current provider stays llm.55aaseclab)\n3. To continue an old conversation, run /fork in it first (encrypted blocks are incompatible with the new route); new chats open as usual.')}</code></pre>
                   </div>
                   <div class="step-faq">
-                  <p><b>{L('想切换回官方 Codex？', 'Want to switch back to official Codex?')}</b><br/>{L('把 config.toml 里 55AA 的配置段与 model_provider 行注释掉（行首加 #，别删），保存后重载窗口：Ctrl/Cmd+Shift+P → Reload Window——官方默认即恢复，ChatGPT 登录态未动会自动生效。想切回 55AA：取消注释，再 Reload 一次。', 'Comment out the 55AA block and the model_provider line in ~/.codex/config.toml (prefix with #, do not delete), save, then Reload Window — official defaults resume, and your ChatGPT login remains intact. To switch back to 55AA: uncomment and Reload again.')}</p>
+                  <p><b>{L('想切换回官方 Codex？', 'Want to switch back to official Codex?')}</b><br/>{L('把 config.toml 里 55AA 的配置段与 model_provider 行注释掉（行首加 #，别删），保存后重启 Codex 或 VS Code——官方默认即恢复。想切回 55AA：取消注释，再重启一次。', 'Comment out the 55AA block and the model_provider line in config.toml (prefix with #, do not delete), save, then restart Codex or VS Code — official defaults resume. To switch back to 55AA: uncomment and restart again.')}</p>
                   </div>
                   </div>
 </Fragment>
