@@ -382,6 +382,7 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
                   )}</code></pre>
                 </div>
                   </div>
+                  <div class="qa-divider"><span>{L('常见问题', 'FAQ')}</span></div>
                   <div class="step-faq">
                   <p><b>{L('切换到 55AA 后，之前的历史会话看不到了？', 'After switching to 55AA, your previous Codex history is gone?')}</b><br/>{L('历史列表默认只显示「当前 provider」创建的会话——旧会话文件都在 ~/.codex/sessions/，没有丢失。找回：', 'The history list only shows sessions created under the current provider — old session files remain in ~/.codex/sessions/. Nothing was lost. Recover:')}</p>
                   <pre><code>1. 下载（Windows）：https://github.com/Dailin521/codex-provider-sync/releases/download/v1.0.4/CodexProviderSync-1.0.4-windows-x64-setup.exe
@@ -723,6 +724,8 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
   }
   .harness-panel { display: none; }
   .harness-panel.active { display: block; padding: 4px 2px 4px; margin-top: 0; background: transparent; border: none; }
+  .qa-divider { display: flex; align-items: center; gap: 0.9rem; margin: 1.6rem 0 0.4rem; font-weight: 600; color: #555; }
+  .qa-divider::before, .qa-divider::after { content: ""; height: 1px; background: #ddd; flex: 1; }
   .os-tabs { display: flex; gap: 0.4rem 1rem; flex-wrap: wrap; padding-bottom: 0.5rem; margin-bottom: 0.8rem; border-bottom: 1px solid #eee; }
   .os-tab {
     color: #777; cursor: pointer; font: inherit; background: none;
