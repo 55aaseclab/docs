@@ -200,6 +200,12 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                       <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above.')} />
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
+                      <div class="step-faq">
+                        <p><b>{L('之前用官方 Codex / 其他服务商？历史会话找回：', 'Coming from official Codex or another provider? Recover your history:')}</b><br/>{L('历史列表默认只显示「当前 provider」创建的会话——旧会话文件都在 ~/.codex/sessions/，没有丢失。用同步工具统一标记（自动备份）：', 'The history list only shows sessions created under the current provider — old session files remain in ~/.codex/sessions/. Use the sync tool to unify them (auto-backup):')}</p>
+                        <pre><code>1. 下载：https://github.com/Dailin521/codex-provider-sync/releases/latest
+2. 打开工具 → Sync 页 → Sync now（当前 provider 保持 llm.55aaseclab）</code></pre>
+                        {L('继续旧对话先在旧会话里执行 /fork（加密块与新线路不兼容）；新对话直接开。', 'To continue an old conversation, run /fork inside it first (encrypted blocks are provider-bound); new conversations need no fork.')}
+                      </div>
                     </div>
                     <div class="os-panel" id="os-unix">
                       <p><b>{L('1. 安装 Codex', '1. Install Codex')}</b></p>
@@ -225,38 +231,16 @@ requires_openai_auth = false
 experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}"</code></pre>
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
+                      <div class="step-faq">
+                        <p><b>{L('之前用官方 Codex / 其他服务商？历史会话找回：', 'Coming from official Codex or another provider? Recover your history:')}</b><br/>{L('历史列表默认只显示「当前 provider」创建的会话——旧会话文件都在 ~/.codex/sessions/，没有丢失。用同步工具统一标记（自动备份）：', 'The history list only shows sessions created under the current provider — old session files remain in ~/.codex/sessions/. Use the sync tool to unify them (auto-backup):')}</p>
+                        <pre><code>1. 安装（Node 24+）：npm i -g git+https://github.com/Dailin521/codex-provider-sync.git
+2. 运行：codex-provider sync</code></pre>
+                        {L('继续旧对话先在旧会话里执行 /fork（加密块与新线路不兼容）；新对话直接开。', 'To continue an old conversation, run /fork inside it first (encrypted blocks are provider-bound); new conversations need no fork.')}
+                      </div>
                     </div>
 
                     <div class="step-faq">
                       <p><b>{L('修改配置后不生效？', 'Changes not taking effect?')}</b><br/>{L('每次修改 config.toml 后需重启 codex 才会生效。', 'Restart codex after every config.toml change for it to take effect.')}</p>
-                    </div>
-                    <div class="step-faq">
-                      <p><b>{L('之前用官方 Codex / 其他服务商，切换到 55AA 后历史会话找不到了？', 'Previously on official Codex or another provider — history missing after switching to 55AA?')}</b><br/>
-                      {L('这是 Codex 的设计行为：历史列表默认只显示「当前 provider」创建的会话。旧会话文件都还在本地（~/.codex/sessions/），没有丢失，三步找回：', 'This is by design in Codex: the history list only shows sessions created under the current provider. Your old session files are still on disk (~/.codex/sessions/) — nothing was lost. Recover in three steps:')}
-                      </p>
-                      <div class="os-tab-group">
-                        <div class="os-tabs">
-                          <button class="os-tab active" data-os="win-faq" type="button">{L('Windows', 'Windows')}</button>
-                          <button class="os-tab" data-os="unix-faq" type="button">{L('macOS / Linux', 'macOS / Linux')}</button>
-                        </div>
-                        <div class="os-panel active" id="faq-os-win">
-                          <p set:html={L('1. 下载安装包（官方 GitHub Releases）：', '1. Download the installer (official GitHub Releases):')} />
-                          <pre><code>https://github.com/Dailin521/codex-provider-sync/releases/latest</code></pre>
-                          <p set:html={L('文件名形如 <code>CodexProviderSync-1.0.4-windows-x64-setup.exe</code>（安装版；SHA256 校验值见同页 <code>SHA256SUMS.txt</code>）。', 'File name looks like <code>CodexProviderSync-1.0.4-windows-x64-setup.exe</code> (installer; SHA256 checksums in <code>SHA256SUMS.txt</code> on the same page).')} />
-                          <p set:html={L('2. 打开工具 → <b>Sync</b> 页 → 点「<b>Sync now</b>」（立即同步，自动备份；想先核对变更可点「Preview sync」）。当前 provider 保持 llm.55aaseclab。', '2. Open the tool → <b>Sync</b> page → click "<b>Sync now</b>" (instant sync with auto-backup; use "Preview sync" to review changes first). Current provider stays llm.55aaseclab.')} />
-                        </div>
-                        <div class="os-panel" id="faq-os-unix">
-                          <p set:html={L('1. 安装（Node 24+）：', '1. Install (Node 24+):')} />
-                          <pre><code>npm i -g git+https://github.com/Dailin521/codex-provider-sync.git</code></pre>
-                          <p set:html={L('2. 运行：', '2. Run:')} />
-                          <pre><code>codex-provider sync</code></pre>
-                        </div>
-                      </div>
-                      <p><b>{L('macOS / Linux（命令行）', 'macOS / Linux (CLI)')}</b></p>
-                      <pre><code>npm i -g git+https://github.com/Dailin521/codex-provider-sync.git
-codex-provider sync</code></pre>
-                      <p>{L('以上任一方式完成后历史会话即恢复可见。继续旧对话前，先在旧会话里执行 /fork 再继续；新对话直接开即可。', 'After either method, all history becomes visible. To continue an old conversation, run /fork inside it first; new conversations need no fork.')}</p>
-                      <p>{L('说明：旧会话的加密推理块与新线路不兼容，直接续会报 invalid_encrypted_content，/fork 复制内容为新会话后可正常继续。工具不会读取聊天内容与登录状态。', 'Note: old sessions carry encrypted reasoning blocks bound to the original provider — continuing directly fails with invalid_encrypted_content; /fork copies the content into a fresh session that works. The tool never reads chat content or login state.')}</p>
                     </div>
                   </div>
                   <div class="harness-panel" id="harness-opencode">
@@ -511,11 +495,10 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
         pre.appendChild(btn);
       });
 
-      // os 子 tab 切换（优先限定在最近的 .os-tab-group 内，避免多组 tab 互相干扰）
+      // os 子 tab 切换
       document.querySelectorAll('.os-tab').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          var scope = btn.closest('.os-tab-group') || btn.closest('.harness-panel');
-          if (!scope) return;
+          var wrap = btn.closest('.harness-panel');
           scope.querySelectorAll('.os-tab').forEach(function (b) { b.classList.remove('active'); });
           scope.querySelectorAll('.os-panel').forEach(function (p) { p.classList.remove('active'); });
           btn.classList.add('active');
