@@ -202,9 +202,6 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                       <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above.')} />
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
-                      <div class="step-faq">
-                        <p><b>{L('配置后需要重新登录 GPT 账号吗？', 'Do I need to re-login with my GPT account after configuring?')}</b><br/>{L('不需要。配置一次长期生效，且用 55AA 不需要 GPT 账号——鉴权走 55AA 令牌（已写在配置里）；之前的 ChatGPT 登录态留着不冲突。只有换电脑 / 重装系统 / 删除 ~/.codex 才需要重新配置。', 'No. Configure once and it persists — 55AA does not need a GPT account (auth uses your 55AA token already in the config). Your previous ChatGPT login can stay, no conflict. Re-configure only when changing machines, reinstalling, or deleting ~/.codex.')}</p>
-                      </div>
                     </div>
                     <div class="os-panel" id="os-unix">
                       <p><b>{L('1. 安装 Codex', '1. Install Codex')}</b></p>
@@ -230,9 +227,6 @@ requires_openai_auth = false
 experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}"</code></pre>
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
-                      <div class="step-faq">
-                        <p><b>{L('配置后需要重新登录 GPT 账号吗？', 'Do I need to re-login with my GPT account after configuring?')}</b><br/>{L('不需要。配置一次长期生效，且用 55AA 不需要 GPT 账号——鉴权走 55AA 令牌（已写在配置里）；之前的 ChatGPT 登录态留着不冲突。只有换电脑 / 重装系统 / 删除 ~/.codex 才需要重新配置。', 'No. Configure once and it persists — 55AA does not need a GPT account (auth uses your 55AA token already in the config). Your previous ChatGPT login can stay, no conflict. Re-configure only when changing machines, reinstalling, or deleting ~/.codex.')}</p>
-                      </div>
                     </div>
 
                 <div class="step-faq skill-install">
