@@ -244,7 +244,8 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                     </div>
                   </div>
                   <div class="harness-panel" id="harness-opencode">
-                    <div class="os-tabs">
+                    <p class="note"><b>{L('注意：', 'Note:')}</b>{L('如果你有 OpenAI 订阅或其他大模型网关的订阅，请务必按照下方提示修改配置文件——否则请求仍会发往原来的地址，导致 401 等错误。', 'If you have an OpenAI subscription or another LLM gateway configured, be sure to update your config file as instructed below — otherwise requests will still go to the previous endpoint and fail (401, etc).')}</p>
+<div class="os-tabs">
                       <button class="os-tab active" data-os="win">{L('Windows', 'Windows')}</button>
                       <button class="os-tab" data-os="unix">{L('Linux / macOS', 'Linux / macOS')}</button>
                     </div>
