@@ -234,11 +234,24 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                       <p><b>{L('之前用官方 Codex / 其他服务商，切换到 55AA 后历史会话找不到了？', 'Previously on official Codex or another provider — history missing after switching to 55AA?')}</b><br/>
                       {L('这是 Codex 的设计行为：历史列表默认只显示「当前 provider」创建的会话。旧会话文件都还在本地（~/.codex/sessions/），没有丢失，三步找回：', 'This is by design in Codex: the history list only shows sessions created under the current provider. Your old session files are still on disk (~/.codex/sessions/) — nothing was lost. Recover in three steps:')}
                       </p>
-                      <p><b>{L('Windows（图形界面）', 'Windows (GUI)')}</b></p>
-                      <pre><code>{L(
-                        '1. 从 GitHub Releases 下载安装包：\nhttps://github.com/Dailin521/codex-provider-sync/releases\n\n2. 打开工具：Refresh → 选择当前 provider（llm.55aaseclab）→ Execute（自动备份，可随时恢复）',
-                        '1. Download the installer from GitHub Releases:\nhttps://github.com/Dailin521/codex-provider-sync/releases\n\n2. Open the tool: Refresh → select the current provider (llm.55aaseclab) → Execute (auto-backup, restorable)'
-                      )}</code></pre>
+                      <div class="os-tab-group">
+                        <div class="os-tabs">
+                          <button class="os-tab active" data-os="win-faq" type="button">{L('Windows', 'Windows')}</button>
+                          <button class="os-tab" data-os="unix-faq" type="button">{L('macOS / Linux', 'macOS / Linux')}</button>
+                        </div>
+                        <div class="os-panel active" id="faq-os-win">
+                          <p set:html={L('1. 下载安装包（官方 GitHub Releases）：', '1. Download the installer (official GitHub Releases):')} />
+                          <pre><code>https://github.com/Dailin521/codex-provider-sync/releases/latest</code></pre>
+                          <p set:html={L('文件名形如 <code>CodexProviderSync-1.0.4-windows-x64-setup.exe</code>（安装版；SHA256 校验值见同页 <code>SHA256SUMS.txt</code>）。', 'File name looks like <code>CodexProviderSync-1.0.4-windows-x64-setup.exe</code> (installer; SHA256 checksums in <code>SHA256SUMS.txt</code> on the same page).')} />
+                          <p set:html={L('2. 打开工具 → <b>Sync</b> 页 → 点「<b>Sync now</b>」（立即同步，自动备份；想先核对变更可点「Preview sync」）。当前 provider 保持 llm.55aaseclab。', '2. Open the tool → <b>Sync</b> page → click "<b>Sync now</b>" (instant sync with auto-backup; use "Preview sync" to review changes first). Current provider stays llm.55aaseclab.')} />
+                        </div>
+                        <div class="os-panel" id="faq-os-unix">
+                          <p set:html={L('1. 安装（Node 24+）：', '1. Install (Node 24+):')} />
+                          <pre><code>npm i -g git+https://github.com/Dailin521/codex-provider-sync.git</code></pre>
+                          <p set:html={L('2. 运行：', '2. Run:')} />
+                          <pre><code>codex-provider sync</code></pre>
+                        </div>
+                      </div>
                       <p><b>{L('macOS / Linux（命令行）', 'macOS / Linux (CLI)')}</b></p>
                       <pre><code>npm i -g git+https://github.com/Dailin521/codex-provider-sync.git
 codex-provider sync</code></pre>
@@ -498,14 +511,15 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
         pre.appendChild(btn);
       });
 
-      // os 子 tab 切换
+      // os 子 tab 切换（优先限定在最近的 .os-tab-group 内，避免多组 tab 互相干扰）
       document.querySelectorAll('.os-tab').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          var wrap = btn.closest('.harness-panel');
-          wrap.querySelectorAll('.os-tab').forEach(function (b) { b.classList.remove('active'); });
-          wrap.querySelectorAll('.os-panel').forEach(function (p) { p.classList.remove('active'); });
+          var scope = btn.closest('.os-tab-group') || btn.closest('.harness-panel');
+          if (!scope) return;
+          scope.querySelectorAll('.os-tab').forEach(function (b) { b.classList.remove('active'); });
+          scope.querySelectorAll('.os-panel').forEach(function (p) { p.classList.remove('active'); });
           btn.classList.add('active');
-          var panel = wrap.querySelector('#os-' + btn.dataset.os);
+          var panel = scope.querySelector('#os-' + btn.dataset.os);
           if (panel) panel.classList.add('active');
         });
       });
