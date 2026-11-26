@@ -383,7 +383,11 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
                 </div>
                   </div>
                   <div class="qa-divider"><span>{L('常见问题', 'FAQ')}</span></div>
-                  <div class="qa-group-label">Codex</div>
+                  <div class="qa-tabs">
+                    <button class="qa-tab active" data-qa="codex">Codex</button>
+                    <button class="qa-tab" data-qa="workbuddy">WorkBuddy</button>
+                  </div>
+                  <div class="qa-group active" id="qa-codex">
                   <div class="step-faq">
                   <p><b>{L('切换到 55AA 后，之前的历史会话看不到了？', 'After switching to 55AA, your previous Codex history is gone?')}</b><br/>{L('历史列表默认只显示「当前 provider」创建的会话——旧会话文件都在 ~/.codex/sessions/，没有丢失。找回：', 'The history list only shows sessions created under the current provider — old session files remain in ~/.codex/sessions/. Nothing was lost. Recover:')}</p>
                   <pre><code>1. 下载（Windows）：https://github.com/Dailin521/codex-provider-sync/releases/download/v1.0.4/CodexProviderSync-1.0.4-windows-x64-setup.exe
@@ -399,9 +403,11 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
                   <div class="step-faq">
                   <p><b>{L('想切换回官方 Codex？', 'Want to switch back to official Codex?')}</b><br/>{L('把 config.toml 里 55AA 的配置段与 model_provider 行注释掉（行首加 #，别删），保存后重载窗口：Ctrl/Cmd+Shift+P → Reload Window——官方默认即恢复，ChatGPT 登录态未动会自动生效。想切回 55AA：取消注释，再 Reload 一次。', 'Comment out the 55AA block and the model_provider line in ~/.codex/config.toml (prefix with #, do not delete), save, then Reload Window — official defaults resume, and your ChatGPT login remains intact. To switch back to 55AA: uncomment and Reload again.')}</p>
                   </div>
-                  <div class="qa-group-label">WorkBuddy</div>
+                  </div>
+                  <div class="qa-group" id="qa-workbuddy">
                   <div class="step-faq">
                   <p><b>{L('如何修改模型？（WorkBuddy）', 'How to change the model? (WorkBuddy)')}</b><br/>{L('再次打开模型选择器 → 配置自定义模型 → 选中已添加的模型修改「模型名称」后保存；或直接在模型选择器的「自定义模型」分组里切换到其他已添加的模型。可用模型：gpt-6.2-astra、gpt-6.1-sol、gpt-6.1-terra、gpt-6、gpt-6-sol、gpt-6-luna、gpt-6-astra、gpt-5.6、gpt-5.6-sol、gpt-5.6-terra、gpt-5.6-luna。', 'Open the model picker again → Configure custom models → select the model you added, change its model name and save; or simply switch to another added model under the "Custom models" group in the picker. Available models: gpt-6.2-astra, gpt-6.1-sol, gpt-6.1-terra, gpt-6, gpt-6-sol, gpt-6-luna, gpt-6-astra, gpt-5.6, gpt-5.6-sol, gpt-5.6-terra, gpt-5.6-luna.')}</p>
+                  </div>
                   </div>
                 </Fragment>
               )}
@@ -478,6 +484,17 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
           if (panel) panel.classList.add('active');
           var osActive = panel && panel.querySelector('.os-tab.active');
           history.pushState(null, '', '#' + btn.dataset.harness + (osActive ? '-' + osActive.dataset.os : ''));
+        });
+      });
+
+      // FAQ tab 切换（常见问题区按工具分组）
+      document.querySelectorAll('.qa-tab').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.qa-tab').forEach(function (b) { b.classList.remove('active'); });
+          document.querySelectorAll('.qa-group').forEach(function (g) { g.classList.remove('active'); });
+          btn.classList.add('active');
+          var grp = document.getElementById('qa-' + btn.dataset.qa);
+          if (grp) grp.classList.add('active');
         });
       });
 
@@ -728,7 +745,16 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
   .harness-panel.active { display: block; padding: 4px 2px 4px; margin-top: 0; background: transparent; border: none; }
   .qa-divider { display: flex; align-items: center; gap: 0.9rem; margin: 1.6rem 0 0.4rem; font-weight: 600; color: #555; }
   .qa-divider::before, .qa-divider::after { content: ""; height: 1px; background: #ddd; flex: 1; }
-  .qa-group-label { margin: 1.1rem 0 0.2rem; font-weight: 700; font-size: 0.9rem; color: #444; }
+  .qa-tabs { display: flex; gap: 0.4rem 1rem; flex-wrap: wrap; padding-bottom: 0.5rem; margin: 0.6rem 0 0.8rem; border-bottom: 1px solid #eee; }
+  .qa-tab {
+    color: #777; cursor: pointer; font: inherit; background: none;
+    border: 0; border-bottom: 1px solid transparent; padding: 0.15rem 0 0.05rem;
+    font-weight: 400;
+  }
+  .qa-tab:hover { color: #333; }
+  .qa-tab.active { color: #000; border-bottom-color: #333; }
+  .qa-group { display: none; }
+  .qa-group.active { display: block; }
   .os-tabs { display: flex; gap: 0.4rem 1rem; flex-wrap: wrap; padding-bottom: 0.5rem; margin-bottom: 0.8rem; border-bottom: 1px solid #eee; }
   .os-tab {
     color: #777; cursor: pointer; font: inherit; background: none;
