@@ -236,14 +236,14 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                       </p>
                       <p><b>{L('Windows（图形界面）', 'Windows (GUI)')}</b></p>
                       <pre><code>{L(
-                        '1. 从 GitHub Releases 下载安装包（勿用网盘分发版）：\nhttps://github.com/Dailin521/codex-provider-sync/releases\n\n2. 打开工具：Refresh → 选择当前 provider（llm.55aaseclab）→ Execute（自动备份，可随时恢复）',
-                        '1. Download the installer from GitHub Releases (do NOT use file-sharing copies):\nhttps://github.com/Dailin521/codex-provider-sync/releases\n\n2. Open the tool: Refresh → select the current provider (llm.55aaseclab) → Execute (auto-backup, restorable)'
+                        '1. 从 GitHub Releases 下载安装包：\nhttps://github.com/Dailin521/codex-provider-sync/releases\n\n2. 打开工具：Refresh → 选择当前 provider（llm.55aaseclab）→ Execute（自动备份，可随时恢复）',
+                        '1. Download the installer from GitHub Releases:\nhttps://github.com/Dailin521/codex-provider-sync/releases\n\n2. Open the tool: Refresh → select the current provider (llm.55aaseclab) → Execute (auto-backup, restorable)'
                       )}</code></pre>
                       <p><b>{L('macOS / Linux（命令行）', 'macOS / Linux (CLI)')}</b></p>
                       <pre><code>npm i -g git+https://github.com/Dailin521/codex-provider-sync.git
 codex-provider sync</code></pre>
                       <p>{L('以上任一方式完成后历史会话即恢复可见。继续旧对话前，先在旧会话里执行 /fork 再继续；新对话直接开即可。', 'After either method, all history becomes visible. To continue an old conversation, run /fork inside it first; new conversations need no fork.')}</p>
-                      <p>{L('说明：旧会话的加密推理块与新线路不兼容，直接续会报 invalid_encrypted_content，/fork 复制内容为新会话后可正常继续。工具不会读取聊天内容与登录状态；请勿使用网盘分发的 EXE。', 'Note: old sessions carry encrypted reasoning blocks bound to the original provider — continuing directly fails with invalid_encrypted_content; /fork copies the content into a fresh session that works. The tool never reads chat content or login state; do not use EXE copies distributed via file-sharing sites.')}</p>
+                      <p>{L('说明：旧会话的加密推理块与新线路不兼容，直接续会报 invalid_encrypted_content，/fork 复制内容为新会话后可正常继续。工具不会读取聊天内容与登录状态。', 'Note: old sessions carry encrypted reasoning blocks bound to the original provider — continuing directly fails with invalid_encrypted_content; /fork copies the content into a fresh session that works. The tool never reads chat content or login state.')}</p>
                     </div>
                   </div>
                   <div class="harness-panel" id="harness-opencode">
