@@ -201,7 +201,7 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
                       <div class="step-faq">
-                        <p><b>{L('之前用官方 Codex / 其他服务商？历史会话找回：', 'Coming from official Codex or another provider? Recover your history:')}</b><br/>{L('历史列表默认只显示「当前 provider」创建的会话——旧会话文件都在 ~/.codex/sessions/，没有丢失。用同步工具统一标记（自动备份）：', 'The history list only shows sessions created under the current provider — old session files remain in ~/.codex/sessions/. Use the sync tool to unify them (auto-backup):')}</p>
+                        <p><b>{L('切换到 55AA 后，之前的历史会话看不到了？', 'After switching to 55AA, your previous Codex history is gone?')}</b><br/>{L('历史列表默认只显示「当前 provider」创建的会话——旧会话文件都在 ~/.codex/sessions/，没有丢失。用同步工具统一标记（自动备份）：', 'The history list only shows sessions created under the current provider — old session files remain in ~/.codex/sessions/. Use the sync tool to unify them (auto-backup):')}</p>
                         <pre><code>1. 下载：https://github.com/Dailin521/codex-provider-sync/releases/latest
 2. 打开工具 → Sync 页 → Sync now（当前 provider 保持 llm.55aaseclab）</code></pre>
                         {L('继续旧对话先在旧会话里执行 /fork（加密块与新线路不兼容）；新对话直接开。', 'To continue an old conversation, run /fork inside it first (encrypted blocks are provider-bound); new conversations need no fork.')}
@@ -232,7 +232,7 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
                       <div class="step-faq">
-                        <p><b>{L('之前用官方 Codex / 其他服务商？历史会话找回：', 'Coming from official Codex or another provider? Recover your history:')}</b><br/>{L('历史列表默认只显示「当前 provider」创建的会话——旧会话文件都在 ~/.codex/sessions/，没有丢失。用同步工具统一标记（自动备份）：', 'The history list only shows sessions created under the current provider — old session files remain in ~/.codex/sessions/. Use the sync tool to unify them (auto-backup):')}</p>
+                        <p><b>{L('切换到 55AA 后，之前的历史会话看不到了？', 'After switching to 55AA, your previous Codex history is gone?')}</b><br/>{L('历史列表默认只显示「当前 provider」创建的会话——旧会话文件都在 ~/.codex/sessions/，没有丢失。用同步工具统一标记（自动备份）：', 'The history list only shows sessions created under the current provider — old session files remain in ~/.codex/sessions/. Use the sync tool to unify them (auto-backup):')}</p>
                         <pre><code>1. 安装（Node 24+）：npm i -g git+https://github.com/Dailin521/codex-provider-sync.git
 2. 运行：codex-provider sync</code></pre>
                         {L('继续旧对话先在旧会话里执行 /fork（加密块与新线路不兼容）；新对话直接开。', 'To continue an old conversation, run /fork inside it first (encrypted blocks are provider-bound); new conversations need no fork.')}
