@@ -172,14 +172,7 @@ const T = {
                       <span>WorkBuddy</span>
                     </button>
                   </div>
-                <div class="step-faq skill-install">
-                  <p><b>{L('安装生图技能 55aaimagegen', 'Install the image skill 55aaimagegen')}</b><br/>
-                  {L('把下面的提示词原样发给你的 AI 工具（Codex / OpenCode / WorkBuddy 均可），它会自动下载并安装技能（工具请求写入技能目录时请批准）。安装后在对话里直接说「画一张……」即可生成图片，技能会自动从你当前工具的配置里找到 API 密钥。', 'Paste the prompt below verbatim into your AI tool (Codex / OpenCode / WorkBuddy all work) — it downloads and installs the skill automatically (approve the write when the tool asks to save into its skill directory). Afterwards just say "draw ..." in the chat; the skill finds your API key from the tool you are using.')}</p>
-                  <pre><code>{L(
-                    '请安装 55AA 生图技能：\nGitHub 源：https://github.com/55aaseclab/docs/tree/main/public/skills/55aaimagegen\n（SKILL.md + references/；安装为技能名 55aaimagegen。）\n若安装器不支持子目录，则获取该目录下全部文件（SKILL.md、references/prompting.md、references/sample-prompts.md、references/image-api.md），保持相对目录结构写入你的技能目录。\n完成后告诉我如何触发它。',
-                    'Install the 55AA image-generation skill:\nGitHub source: https://github.com/55aaseclab/docs/tree/main/public/skills/55aaimagegen\n(SKILL.md + references/; install as skill name 55aaimagegen.)\nIf the installer does not support subdirectories, fetch all files in that directory (SKILL.md, references/prompting.md, references/sample-prompts.md, references/image-api.md) and write them into your skill directory preserving the relative folder structure.\nWhen done, tell me how to trigger it.'
-                  )}</code></pre>
-                </div>
+
                   <div class="harness-panel active" id="harness-codex">
                     <div class="os-tabs">
                       <button class="os-tab active" data-os="win">{L('Windows', 'Windows')}</button>
@@ -210,12 +203,6 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
                       <div class="step-faq">
-                        <p><b>{L('切换到 55AA 后，之前的历史会话看不到了？', 'After switching to 55AA, your previous Codex history is gone?')}</b><br/>{L('历史列表默认只显示「当前 provider」创建的会话——旧会话文件都在 ~/.codex/sessions/，没有丢失。', 'The history list only shows sessions created under the current provider — old session files remain in ~/.codex/sessions/. Nothing was lost.')}</p>
-                        <pre><code>1. 下载：https://github.com/Dailin521/codex-provider-sync/releases/download/v1.0.4/CodexProviderSync-1.0.4-windows-x64-setup.exe
-2. 打开工具 → Sync 页 → Sync now（当前 provider 保持 llm.55aaseclab）
-3. 继续旧对话先在旧会话里执行 /fork（加密块与新线路不兼容）；新对话直接开。</code></pre>
-                      </div>
-                      <div class="step-faq">
                         <p><b>{L('配置后需要重新登录 GPT 账号吗？', 'Do I need to re-login with my GPT account after configuring?')}</b><br/>{L('不需要。配置一次长期生效，且用 55AA 不需要 GPT 账号——鉴权走 55AA 令牌（已写在配置里）；之前的 ChatGPT 登录态留着不冲突。只有换电脑 / 重装系统 / 删除 ~/.codex 才需要重新配置。', 'No. Configure once and it persists — 55AA does not need a GPT account (auth uses your 55AA token already in the config). Your previous ChatGPT login can stay, no conflict. Re-configure only when changing machines, reinstalling, or deleting ~/.codex.')}</p>
                       </div>
                     </div>
@@ -244,16 +231,31 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                       <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>codex</code>，随便发一句话，能正常回复即配置成功。', 'Run <code>codex</code> and send any message — a normal reply means it works.')} />
                       <div class="step-faq">
+                        <p><b>{L('配置后需要重新登录 GPT 账号吗？', 'Do I need to re-login with my GPT account after configuring?')}</b><br/>{L('不需要。配置一次长期生效，且用 55AA 不需要 GPT 账号——鉴权走 55AA 令牌（已写在配置里）；之前的 ChatGPT 登录态留着不冲突。只有换电脑 / 重装系统 / 删除 ~/.codex 才需要重新配置。', 'No. Configure once and it persists — 55AA does not need a GPT account (auth uses your 55AA token already in the config). Your previous ChatGPT login can stay, no conflict. Re-configure only when changing machines, reinstalling, or deleting ~/.codex.')}</p>
+                      </div>
+                    </div>
+
+                <div class="step-faq skill-install">
+                  <p><b>{L('安装生图技能 55aaimagegen', 'Install the image skill 55aaimagegen')}</b><br/>
+                  {L('把下面的提示词原样发给你的 AI 工具（Codex / OpenCode / WorkBuddy 均可），它会自动下载并安装技能（工具请求写入技能目录时请批准）。安装后在对话里直接说「画一张……」即可生成图片，技能会自动从你当前工具的配置里找到 API 密钥。', 'Paste the prompt below verbatim into your AI tool (Codex / OpenCode / WorkBuddy all work) — it downloads and installs the skill automatically (approve the write when the tool asks to save into its skill directory). Afterwards just say "draw ..." in the chat; the skill finds your API key from the tool you are using.')}</p>
+                  <pre><code>{L(
+                    '请安装 55AA 生图技能：\nGitHub 源：https://github.com/55aaseclab/docs/tree/main/public/skills/55aaimagegen\n（SKILL.md + references/；安装为技能名 55aaimagegen。）\n若安装器不支持子目录，则获取该目录下全部文件（SKILL.md、references/prompting.md、references/sample-prompts.md、references/image-api.md），保持相对目录结构写入你的技能目录。\n完成后告诉我如何触发它。',
+                    'Install the 55AA image-generation skill:\nGitHub source: https://github.com/55aaseclab/docs/tree/main/public/skills/55aaimagegen\n(SKILL.md + references/; install as skill name 55aaimagegen.)\nIf the installer does not support subdirectories, fetch all files in that directory (SKILL.md, references/prompting.md, references/sample-prompts.md, references/image-api.md) and write them into your skill directory preserving the relative folder structure.\nWhen done, tell me how to trigger it.'
+                  )}</code></pre>
+                </div>
+                      <div class="step-faq">
+                        <p><b>{L('切换到 55AA 后，之前的历史会话看不到了？', 'After switching to 55AA, your previous Codex history is gone?')}</b><br/>{L('历史列表默认只显示「当前 provider」创建的会话——旧会话文件都在 ~/.codex/sessions/，没有丢失。', 'The history list only shows sessions created under the current provider — old session files remain in ~/.codex/sessions/. Nothing was lost.')}</p>
+                        <pre><code>1. 下载：https://github.com/Dailin521/codex-provider-sync/releases/download/v1.0.4/CodexProviderSync-1.0.4-windows-x64-setup.exe
+2. 打开工具 → Sync 页 → Sync now（当前 provider 保持 llm.55aaseclab）
+3. 继续旧对话先在旧会话里执行 /fork（加密块与新线路不兼容）；新对话直接开。</code></pre>
+                      </div>
+
+                      <div class="step-faq">
                         <p><b>{L('切换到 55AA 后，之前的历史会话看不到了？', 'After switching to 55AA, your previous Codex history is gone?')}</b><br/>{L('历史列表默认只显示「当前 provider」创建的会话——旧会话文件都在 ~/.codex/sessions/，没有丢失。', 'The history list only shows sessions created under the current provider — old session files remain in ~/.codex/sessions/. Nothing was lost.')}</p>
                         <pre><code>1. 安装（Node 24+）：npm i -g git+https://github.com/Dailin521/codex-provider-sync.git
 2. 运行：codex-provider sync
 3. 继续旧对话先在旧会话里执行 /fork（加密块与新线路不兼容）；新对话直接开。</code></pre>
                       </div>
-                      <div class="step-faq">
-                        <p><b>{L('配置后需要重新登录 GPT 账号吗？', 'Do I need to re-login with my GPT account after configuring?')}</b><br/>{L('不需要。配置一次长期生效，且用 55AA 不需要 GPT 账号——鉴权走 55AA 令牌（已写在配置里）；之前的 ChatGPT 登录态留着不冲突。只有换电脑 / 重装系统 / 删除 ~/.codex 才需要重新配置。', 'No. Configure once and it persists — 55AA does not need a GPT account (auth uses your 55AA token already in the config). Your previous ChatGPT login can stay, no conflict. Re-configure only when changing machines, reinstalling, or deleting ~/.codex.')}</p>
-                      </div>
-                    </div>
-
                     <div class="step-faq">
                       <p><b>{L('修改配置后不生效？', 'Changes not taking effect?')}</b><br/>{L('每次修改 config.toml 后需重启 codex 才会生效。', 'Restart codex after every config.toml change for it to take effect.')}</p>
                     </div>
