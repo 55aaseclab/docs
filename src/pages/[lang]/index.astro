@@ -499,10 +499,10 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
       document.querySelectorAll('.os-tab').forEach(function (btn) {
         btn.addEventListener('click', function () {
           var wrap = btn.closest('.harness-panel');
-          scope.querySelectorAll('.os-tab').forEach(function (b) { b.classList.remove('active'); });
-          scope.querySelectorAll('.os-panel').forEach(function (p) { p.classList.remove('active'); });
+          wrap.querySelectorAll('.os-tab').forEach(function (b) { b.classList.remove('active'); });
+          wrap.querySelectorAll('.os-panel').forEach(function (p) { p.classList.remove('active'); });
           btn.classList.add('active');
-          var panel = scope.querySelector('#os-' + btn.dataset.os);
+          var panel = wrap.querySelector('#os-' + btn.dataset.os);
           if (panel) panel.classList.add('active');
         });
       });
