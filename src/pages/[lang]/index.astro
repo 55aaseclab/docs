@@ -230,6 +230,16 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                     <div class="step-faq">
                       <p><b>{L('修改配置后不生效？', 'Changes not taking effect?')}</b><br/>{L('每次修改 config.toml 后需重启 codex 才会生效。', 'Restart codex after every config.toml change for it to take effect.')}</p>
                     </div>
+                    <div class="step-faq">
+                      <p><b>{L('之前用官方 Codex / 其他服务商，切换到 55AA 后历史会话找不到了？', 'Previously on official Codex or another provider — history missing after switching to 55AA?')}</b><br/>
+                      {L('这是 Codex 的设计行为：历史列表默认只显示「当前 provider」创建的会话。旧会话文件都还在本地（~/.codex/sessions/），没有丢失，三步找回：', 'This is by design in Codex: the history list only shows sessions created under the current provider. Your old session files are still on disk (~/.codex/sessions/) — nothing was lost. Recover in three steps:')}
+                      </p>
+                      <pre><code>{L(
+                        '1. 安装同步工具（Node 24+，请从 GitHub 源码安装）：\nnpm i -g git+https://github.com/Dailin521/codex-provider-sync.git\n\n2. 同步历史会话标记（统一为当前 provider，历史全部可见）：\ncodex-provider sync\n\n3. 继续旧对话前，先在旧会话里执行 /fork 再继续；新对话直接开即可。',
+                        '1. Install the sync tool (Node 24+; install from GitHub source only):\nnpm i -g git+https://github.com/Dailin521/codex-provider-sync.git\n\n2. Sync session metadata (rewrites old provider tags to the current one — all history becomes visible):\ncodex-provider sync\n\n3. To continue an old conversation, run /fork inside it first; new conversations need no fork.'
+                      )}</code></pre>
+                      <p>{L('说明：旧会话的加密推理块与新线路不兼容，直接续会报 invalid_encrypted_content，/fork 复制内容为新会话后可正常继续。工具不会读取聊天内容与登录状态；请勿使用网盘分发的 EXE。', 'Note: old sessions carry encrypted reasoning blocks bound to the original provider — continuing directly fails with invalid_encrypted_content; /fork copies the content into a fresh session that works. The tool never reads chat content or login state; do not use EXE copies distributed via file-sharing sites.')}</p>
+                    </div>
                   </div>
                   <div class="harness-panel" id="harness-opencode">
                     <div class="os-tabs">
