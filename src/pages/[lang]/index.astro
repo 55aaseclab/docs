@@ -157,7 +157,7 @@ const T = {
               {st.note && <p class="note" set:html={st.note} />}
               {st.harness && (
                 <Fragment>
-                  <p class="note"><b>{L('注意：', 'Note:')}</b>{L('如果你有 OpenAI 订阅或其他大模型网关的订阅，请务必按照下方提示修改配置文件——否则请求仍会发往原来的地址，导致 401 等错误。', 'If you have an OpenAI subscription or another LLM gateway configured, be sure to update your config file as instructed below — otherwise requests will still go to the previous endpoint and fail (401, etc).')}</p>
+                  <p class="note">{L('本站的 API 与 OpenAI 官方 API 不互通，请务必按照下方提示修改配置文件。', "This gateway's API is not interoperable with the official OpenAI API — be sure to update your config file as instructed below.")}</p>
                   <div class="harness-tabs">
                     <button class="harness-tab active" data-harness="codex" id="codex">
                       <img src="/icon-codex.png" width="18" height="18" alt="Codex" class="harness-icon-img" />
