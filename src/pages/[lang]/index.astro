@@ -206,21 +206,22 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                       <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above.')} />
                       </div>
                     <div class="cfg-used-only" hidden>
-                      <p><b>{L('2. 修改已有配置（追加，不重写）', '2. Update the existing config (append, do not rewrite)')}</b></p>
+                      <p><b>{L('2. 修改已有配置', '2. Update the existing config')}</b></p>
                       <p set:html={L('打开配置目录：', 'Open the config folder:')} />
                       <pre><code>start "" "%USERPROFILE%\.codex"</code></pre>
-                      <p set:html={L('已有 <code>config.toml</code> 时<b>不要整份重写</b>，只做两件事：① 在文件<b>末尾</b>追加下面整段 <code>[model_providers."llm.55aaseclab"]</code>；② 把文件顶部的 <code>model_provider</code> 行改为 <code>"llm.55aaseclab"</code>、<code>model</code> 行改为你要用的模型——这两行已有就改值，没有就加在顶部，其余原有设置全部保留：', 'If <code>config.toml</code> already exists, <b>do not rewrite the whole file</b> — only two things: append the whole <code>[model_providers."llm.55aaseclab"]</code> block below to the <b>end</b> of the file, then set the top-level <code>model_provider</code> line to <code>"llm.55aaseclab"</code> and <code>model</code> to the model you want — edit these lines if present, add them at the top if not, keeping all your existing settings:')} />
-                      <pre><code>model_provider = "llm.55aaseclab"
-model = "gpt-6.2-sol"
-model_reasoning_effort = "high"
-disable_response_storage = true
-
-[model_providers."llm.55aaseclab"]
+                      <p>{L('打开 config.toml：', 'Open config.toml:')}</p>
+                      <p>{L('第一步：在文件末尾追加下面整段：', 'Step 1: append this block at the end of the file:')}</p>
+                      <pre><code>[model_providers."llm.55aaseclab"]
 name = "llm.55aaseclab"
 base_url = "https://llm.55aaseclab.com/v1"
 wire_api = "responses"
 requires_openai_auth = false
 experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}"</code></pre>
+                      <p>{L('第二步：文件顶部改为（已有就改值，没有就加一行）：', 'Step 2: at the top of the file, set the following (edit these lines if present, add them if not):')}</p>
+                      <pre><code>model_provider = "llm.55aaseclab"
+model = "gpt-6.2-sol"
+model_reasoning_effort = "high"
+disable_response_storage = true</code></pre>
                       <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌，保存后关闭。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above, then save and close.')} />
                     </div>
                     <p><b>{L('3. 验证', '3. Verify')}</b></p>
@@ -261,22 +262,23 @@ requires_openai_auth = false
 experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}"</code></pre>
                       </div>
                     <div class="cfg-used-only" hidden>
-                      <p><b>{L('2. 修改已有配置（追加，不重写）', '2. Update the existing config (append, do not rewrite)')}</b></p>
+                      <p><b>{L('2. 修改已有配置', '2. Update the existing config')}</b></p>
                       <p set:html={L('打开配置目录：', 'Open the config folder:')} />
                       <pre><code>mkdir -p "$HOME/.codex" && open -e "$HOME/.codex/config.toml"   # macOS
 mkdir -p "$HOME/.codex" && xdg-open "$HOME/.codex/config.toml"  # Linux</code></pre>
-                      <p set:html={L('已有 <code>config.toml</code> 时<b>不要整份重写</b>，只做两件事：① 在文件<b>末尾</b>追加下面整段 <code>[model_providers."llm.55aaseclab"]</code>；② 把文件顶部的 <code>model_provider</code> 行改为 <code>"llm.55aaseclab"</code>、<code>model</code> 行改为你要用的模型——这两行已有就改值，没有就加在顶部，其余原有设置全部保留：', 'If <code>config.toml</code> already exists, <b>do not rewrite the whole file</b> — only two things: append the whole <code>[model_providers."llm.55aaseclab"]</code> block below to the <b>end</b> of the file, then set the top-level <code>model_provider</code> line to <code>"llm.55aaseclab"</code> and <code>model</code> to the model you want — edit these lines if present, add them at the top if not, keeping all your existing settings:')} />
-                      <pre><code>model_provider = "llm.55aaseclab"
-model = "gpt-6.2-sol"
-model_reasoning_effort = "high"
-disable_response_storage = true
-
-[model_providers."llm.55aaseclab"]
+                      <p>{L('打开 config.toml：', 'Open config.toml:')}</p>
+                      <p>{L('第一步：在文件末尾追加下面整段：', 'Step 1: append this block at the end of the file:')}</p>
+                      <pre><code>[model_providers."llm.55aaseclab"]
 name = "llm.55aaseclab"
 base_url = "https://llm.55aaseclab.com/v1"
 wire_api = "responses"
 requires_openai_auth = false
 experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}"</code></pre>
+                      <p>{L('第二步：文件顶部改为（已有就改值，没有就加一行）：', 'Step 2: at the top of the file, set the following (edit these lines if present, add them if not):')}</p>
+                      <pre><code>model_provider = "llm.55aaseclab"
+model = "gpt-6.2-sol"
+model_reasoning_effort = "high"
+disable_response_storage = true</code></pre>
                       <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌，保存后关闭。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above, then save and close.')} />
                     </div>
                     <p><b>{L('3. 验证', '3. Verify')}</b></p>
@@ -340,10 +342,11 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
                       <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌。<code>models</code> 里可换成模型广场的其他文本模型。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above. Swap <code>models</code> entries for any text model listed in the Model Gallery.')} />
                       </div>
                     <div class="cfg-used-only" hidden>
-                      <p><b>{L('2. 修改已有配置（追加，不重写）', '2. Update the existing config (append, do not rewrite)')}</b></p>
+                      <p><b>{L('2. 修改已有配置', '2. Update the existing config')}</b></p>
                       <p set:html={L('打开配置目录：', 'Open the config folder:')} />
                       <pre><code>start "" "%USERPROFILE%\.config\opencode"</code></pre>
-                      <p set:html={L('已有 <code>opencode.json</code> 时<b>不要整份重写</b>：在已有 JSON 的 <code>"provider"</code> 对象里加入下面 <code>"llm.55aaseclab"</code> 整段，原有 provider 全部保留，<code>models</code> 按需增删：', 'If <code>opencode.json</code> already exists, <b>do not rewrite the whole file</b>: add the whole <code>"llm.55aaseclab"</code> entry below inside your existing <code>"provider"</code> object, keep your existing providers, and adjust <code>models</code> as needed:')} />
+                      <p>{L('打开 opencode.json：', 'Open opencode.json:')}</p>
+                      <p>{L('第一步：在 "provider" 对象里加入下面整段（原有 provider 保留）：', 'Step 1: add this entry inside the "provider" object (keep your existing providers):')}</p>
                       <pre><code>{`  "llm.55aaseclab": {
     "npm": "@ai-sdk/openai-compatible",
     "name": "llm.55aaseclab",
@@ -366,7 +369,7 @@ experimental_bearer_token = "{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-ke
       "gpt-5.6-luna": {}
     }
   }`}</code></pre>
-                      <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌，保存。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above, then save.')} />
+                      <p>{L('第二步：把 sk-你的API令牌 改成你在上方「获取 API 密钥」里生成的令牌，保存。', 'Step 2: change sk-your-key to the token you generated in "Get API Keys" above, then save.')}</p>
                     </div>
                     <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>opencode</code>，输入 <code>/models</code> 确认列表里有上面配置的模型，选中后发一条消息，能正常回复即配置成功。', 'Run <code>opencode</code>, type <code>/models</code> to confirm the configured models are listed, pick one and send a message — a normal reply means it works.')} />
@@ -423,11 +426,12 @@ xdg-open "$HOME/.config/opencode/opencode.json"  # Linux</code></pre>
                       <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌，保存后关闭。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above, then save and close.')} />
                       </div>
                     <div class="cfg-used-only" hidden>
-                      <p><b>{L('2. 修改已有配置（追加，不重写）', '2. Update the existing config (append, do not rewrite)')}</b></p>
+                      <p><b>{L('2. 修改已有配置', '2. Update the existing config')}</b></p>
                       <p set:html={L('打开配置目录：', 'Open the config folder:')} />
                       <pre><code>open -e "$HOME/.config/opencode/opencode.json"   # macOS
 xdg-open "$HOME/.config/opencode/opencode.json"  # Linux</code></pre>
-                      <p set:html={L('已有 <code>opencode.json</code> 时<b>不要整份重写</b>：在已有 JSON 的 <code>"provider"</code> 对象里加入下面 <code>"llm.55aaseclab"</code> 整段，原有 provider 全部保留，<code>models</code> 按需增删：', 'If <code>opencode.json</code> already exists, <b>do not rewrite the whole file</b>: add the whole <code>"llm.55aaseclab"</code> entry below inside your existing <code>"provider"</code> object, keep your existing providers, and adjust <code>models</code> as needed:')} />
+                      <p>{L('打开 opencode.json：', 'Open opencode.json:')}</p>
+                      <p>{L('第一步：在 "provider" 对象里加入下面整段（原有 provider 保留）：', 'Step 1: add this entry inside the "provider" object (keep your existing providers):')}</p>
                       <pre><code>{`  "llm.55aaseclab": {
     "npm": "@ai-sdk/openai-compatible",
     "name": "llm.55aaseclab",
@@ -450,7 +454,7 @@ xdg-open "$HOME/.config/opencode/opencode.json"  # Linux</code></pre>
       "gpt-5.6-luna": {}
     }
   }`}</code></pre>
-                      <p set:html={L('把 <code>sk-你的API令牌</code> 改成你在上方「获取 API 密钥」里生成的令牌，保存。', 'Change <code>sk-your-key</code> to the token you generated in "Get API Keys" above, then save.')} />
+                      <p>{L('第二步：把 sk-你的API令牌 改成你在上方「获取 API 密钥」里生成的令牌，保存。', 'Step 2: change sk-your-key to the token you generated in "Get API Keys" above, then save.')}</p>
                     </div>
                     <p><b>{L('3. 验证', '3. Verify')}</b></p>
                       <p set:html={L('运行 <code>opencode</code>，输入 <code>/models</code> 确认列表里有上面配置的模型，选中后发一条消息，能正常回复即配置成功。', 'Run <code>opencode</code>, type <code>/models</code> to confirm the configured models are listed, pick one and send a message — a normal reply means it works.')} />
