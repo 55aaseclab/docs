@@ -430,7 +430,7 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
         });
       });
 
-      // harness tab 切换
+      // harness tab 切换 + URL 随动（下方有 os 子 tab 的，默认带上：#codex-win）
       document.querySelectorAll('.harness-tab').forEach(function (btn) {
         btn.addEventListener('click', function () {
           document.querySelectorAll('.harness-tab').forEach(function (b) { b.classList.remove('active'); });
@@ -438,18 +438,37 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
           btn.classList.add('active');
           var panel = document.getElementById('harness-' + btn.dataset.harness);
           if (panel) panel.classList.add('active');
+          var osActive = panel && panel.querySelector('.os-tab.active');
+          history.pushState(null, '', '#' + btn.dataset.harness + (osActive ? '-' + osActive.dataset.os : ''));
         });
       });
 
-      // 锚点直达：#codex/#opencode/#workbuddy 切工具 tab，#register 等 → 展开对应步骤
+      // 锚点直达：#codex-win = 工具 tab + os 子 tab；#register 等 → 展开对应步骤
       function activateFromHash() {
         var h = (location.hash || '').replace('#', '');
         if (!h) return;
-        var tab = document.querySelector('.harness-tab[data-harness="' + h + '"]');
+        var sep = h.indexOf('-');
+        var harnessId = sep > 0 ? h.slice(0, sep) : h;
+        var osId = sep > 0 ? h.slice(sep + 1) : '';
+        var tab = document.querySelector('.harness-tab[data-harness="' + harnessId + '"]');
         if (tab) {
           var host = tab.closest('.step');
           if (host) setStepOpen(host, true);
-          tab.click();
+          document.querySelectorAll('.harness-tab').forEach(function (b) { b.classList.remove('active'); });
+          document.querySelectorAll('.harness-panel').forEach(function (p) { p.classList.remove('active'); });
+          tab.classList.add('active');
+          var panel = document.getElementById('harness-' + harnessId);
+          if (panel) panel.classList.add('active');
+          if (osId) {
+            var osBtn = panel.querySelector('.os-tab[data-os="' + osId + '"]');
+            if (osBtn) {
+              panel.querySelectorAll('.os-tab').forEach(function (b) { b.classList.remove('active'); });
+              panel.querySelectorAll('.os-panel').forEach(function (p) { p.classList.remove('active'); });
+              osBtn.classList.add('active');
+              var osPanel = panel.querySelector('#os-' + osId);
+              if (osPanel) osPanel.classList.add('active');
+            }
+          }
           tab.scrollIntoView({ behavior: 'smooth', block: 'start' });
           return;
         }
@@ -495,7 +514,7 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
         pre.appendChild(btn);
       });
 
-      // os 子 tab 切换
+      // os 子 tab 切换 + URL 随动（#codex-unix）
       document.querySelectorAll('.os-tab').forEach(function (btn) {
         btn.addEventListener('click', function () {
           var wrap = btn.closest('.harness-panel');
@@ -504,6 +523,8 @@ API Key：{lang === 'zh' ? 'sk-你的API令牌' : 'sk-your-key'}
           btn.classList.add('active');
           var panel = wrap.querySelector('#os-' + btn.dataset.os);
           if (panel) panel.classList.add('active');
+          var hp = btn.closest('.harness-panel');
+          if (hp) history.pushState(null, '', '#' + hp.id.replace('harness-', '') + '-' + btn.dataset.os);
         });
       });
     </script>
